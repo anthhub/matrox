@@ -61,7 +61,7 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
     payload: Payload<T> | Action<T, U | undefined> | ActionFn<T, U | undefined>,
     type?: U
   ): Promise<void> => {
-    clearTimeout(this[_batchingMergePropsTimer])
+    cancelAnimationFrame(this[_batchingMergePropsTimer])
     this[_batchingMergePropsTimer] = undefined
 
     let action = compateAction(payload, type)
@@ -71,7 +71,7 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
     const self = (this as unknown) as T
 
     return new Promise(resolve => {
-      this[_batchingMergePropsTimer] = setTimeout(async () => {
+      this[_batchingMergePropsTimer] = requestAnimationFrame(async () => {
         const propsMergedObject = this[_actionsMergedQueue].reduce(
           (
             res: KVProps<T>,

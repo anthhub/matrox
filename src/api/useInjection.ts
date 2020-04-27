@@ -10,8 +10,8 @@ import { Payload } from '../types/StoreBase'
 
 const injector = getInjector()
 
-const useThis = () => {
-  const comp = useRef({})
+const useThis = (args: any) => {
+  const comp = useRef({ args })
 
   return comp.current
 }
@@ -26,10 +26,10 @@ const useInjection = <T extends StoreBase<T>>(
   args?: Payload<T>,
   identify?: any
 ): Readonly<T> => {
-  const comp = useThis()
+  const comp = useThis(args)
   const forceUpdate = useForceUpdate()
 
-  const liseners = [{ forceUpdate, comp, watchedProps: new Set<string>() }]
+  const liseners = useMemo(() => [{ forceUpdate, comp, watchedProps: new Set<string>() }], [])
 
   useEffect(() => injector.subscribe(InjectedStoreClass, args, liseners, `hooks`), [])
 

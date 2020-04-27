@@ -110,13 +110,11 @@ class Injector {
         applyMiddleware(...(options.middlewares || []))(instance)
       }
 
-      const instanceProxy = collectDependence(instance, liseners)
-
-      container.set(key, instanceProxy)
-
-      return instanceProxy
+      container.set(key, instance)
     }
 
-    return instance
+    const instanceProxy = collectDependence(instance, liseners)
+
+    return instanceProxy
   }
 }

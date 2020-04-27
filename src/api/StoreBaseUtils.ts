@@ -7,7 +7,7 @@ let allLiseners: Lisener[] = []
 let batchingUpdateTimer: number
 
 export const batchingUpdate = (liseners: Lisener[]) => {
-  clearTimeout(batchingUpdateTimer)
+  cancelAnimationFrame(batchingUpdateTimer)
 
   liseners.forEach(item => {
     if (!allLiseners.find(it => it.comp === item.comp) && item.forceUpdate) {
@@ -16,7 +16,7 @@ export const batchingUpdate = (liseners: Lisener[]) => {
   })
 
   return new Promise(resolve => {
-    batchingUpdateTimer = setTimeout(() => {
+    batchingUpdateTimer = requestAnimationFrame(() => {
       allLiseners.forEach(item => item?.forceUpdate?.())
       allLiseners = []
 
