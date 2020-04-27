@@ -1,3 +1,7 @@
+import { Lisener, KVProps } from '../types/StoreBase'
+
+import { PlainObject } from '../types/store'
+
 let allLiseners: Lisener[] = []
 
 let batchingUpdateTimer: number

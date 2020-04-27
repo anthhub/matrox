@@ -3,9 +3,11 @@
 import { getInjector } from '../core/Injector'
 
 import StoreBase, { _meta } from './StoreBase'
+import { Constructor } from '../types/store'
+import { Payload } from '../types/StoreBase'
 const injector = getInjector()
 
-export default <T extends StoreBase<T>>(
+const injection = <T extends StoreBase<T>>(
   InjectedStoreClass: Constructor<T>,
   args?: Payload<T>,
   identify?: any
@@ -56,3 +58,5 @@ export default <T extends StoreBase<T>>(
     }
   }
 }
+
+export default injection

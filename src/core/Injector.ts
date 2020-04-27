@@ -2,6 +2,8 @@ import { genStoreKey, mergeOptions, collectDependence } from './utils'
 import StoreBase, { _meta } from '../api/StoreBase'
 
 import applyMiddleware from '../middleware/applyMiddleware'
+import { Constructor, SessionOptions } from '../types/store'
+import { Payload, Lisener, KVProps } from '../types/StoreBase'
 
 let cachedInjector: Injector
 

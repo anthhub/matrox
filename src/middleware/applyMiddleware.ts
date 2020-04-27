@@ -1,7 +1,8 @@
 import compose from './compose'
 import StoreBase, { _meta } from '../api/StoreBase'
+import { MiddleWare, StoreAPI } from '../types/middleware'
 
-export default function applyMiddleware(...middlewares: MiddleWare[]) {
+const applyMiddleware = (...middlewares: MiddleWare[]) => {
   return <T extends StoreBase<any>>(store: T) => {
     let dispatch: any = () => {
       throw new Error(
@@ -29,3 +30,5 @@ export default function applyMiddleware(...middlewares: MiddleWare[]) {
     }
   }
 }
+
+export default applyMiddleware

@@ -6,6 +6,7 @@ import {
   updateTarget,
   compateAction
 } from './StoreBaseUtils'
+import { Action, Meta, ActionFn, Payload, KVProps } from '../types/StoreBase'
 
 const _batchingMergePropsTimer = Symbol(`_batchingMergePropsTimer`)
 const _actionsMergedQueue = Symbol(`_actionsMergedQueue`)

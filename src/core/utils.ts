@@ -1,6 +1,8 @@
 import StoreBase, { _meta } from '../api/StoreBase'
 import { globalOptions } from '../api/config'
-import { persist } from '../middleware/persist'
+import persist from '../middleware/persist'
+import { Constructor, Scope, Options } from '../types/store'
+import { Lisener } from '../types/StoreBase'
 
 export const getUrlRelativePath = () => {
   const url = document.location.toString()

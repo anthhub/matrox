@@ -3,6 +3,8 @@
 import { getInjector } from '../core/Injector'
 
 import StoreBase, { _meta } from './StoreBase'
+import { Constructor, Scope } from '../types/store'
+import { Payload } from '../types/StoreBase'
 const injector = getInjector()
 
 const cache = new Map()

@@ -5,6 +5,8 @@ import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { getInjector } from '../core/Injector'
 
 import StoreBase from './StoreBase'
+import { Constructor } from '../types/store'
+import { Payload } from '../types/StoreBase'
 
 const injector = getInjector()
 

@@ -1,4 +1,8 @@
-export const persist: MiddleWare = (store: StoreAPI) => {
+import { MiddleWare, StoreAPI, Dispatch } from '../types/middleware'
+
+import { Action } from '../types/StoreBase'
+
+const persist: MiddleWare = (store: StoreAPI) => {
   const { key, scope } = store.meta
 
   const state = JSON.parse(localStorage.getItem(key) || '{}')
@@ -13,3 +17,5 @@ export const persist: MiddleWare = (store: StoreAPI) => {
     }
   }
 }
+
+export default persist

@@ -3,6 +3,8 @@
 import getInjection from './getInjection'
 
 import StoreBase from './StoreBase'
+import { Payload } from '../types/StoreBase'
+import { Constructor } from '../types/store'
 
 const preLoad = <T extends StoreBase<T>, U extends Payload<T>>(
   InjectedStoreClass: Constructor<T>,
