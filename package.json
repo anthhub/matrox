@@ -1,6 +1,6 @@
 {
   "name": "matrox",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "",
   "keywords": [],
   "main": "dist/matrox.umd.js",
@@ -9,10 +9,10 @@
   "files": [
     "dist"
   ],
-  "author": "anthhub@163.com",
+  "author": "anthhub <anthhub@163.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/anthhub/matrox"
   },
   "license": "MIT",
   "engines": {
@@ -21,7 +21,7 @@
   "scripts": {
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
-    "build": "rm -rf dist && tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+    "build": "rm -rf dist && tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode modules src",
     "start": "rollup -c rollup.config.ts -w",
     "test": "rm -rf dist && jest --coverage",
     "test:watch": "jest --coverage --watch",
