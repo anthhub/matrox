@@ -41,13 +41,11 @@ export const getEffectiveLiseners = <T extends PlainObject>(
   liseners: Lisener[],
   updateObject: KVProps<T>
 ) => {
-  console.log('%c%s', 'color: #259b24', 'ANTH LOG: liseners', liseners)
   const effectiveLiseners = liseners.filter(item =>
     [...((item.watchedProps as unknown) as string[])].some((it: string) =>
       Object.keys(updateObject).includes(it)
     )
   )
-  console.log('%c%s', 'color: #259b24', 'ANTH LOG: effectiveLiseners', effectiveLiseners)
   return effectiveLiseners
 }
 
@@ -59,6 +57,7 @@ export const updateTarget = <T extends PlainObject>(target: T, updateObject: KVP
     }
     if (typeof value === 'function') {
       if (process.env.NODE_ENV === 'production') {
+        return
       } else {
         throw new Error('Forbid reseting member method of class!')
       }

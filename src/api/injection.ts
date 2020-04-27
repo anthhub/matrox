@@ -1,4 +1,4 @@
-import 'reflect-metadata'
+// import 'reflect-metadata'
 
 import { getInjector } from '../core/Injector'
 
@@ -6,20 +6,20 @@ import StoreBase, { _meta } from './StoreBase'
 const injector = getInjector()
 
 export default <T extends StoreBase<T>>(
-  InjectedStoreClass?: Constructor<T>,
+  InjectedStoreClass: Constructor<T>,
   args?: Payload<T>,
   identify?: any
 ): any => (target: any, property: string): Readonly<any> => {
   const propertySymbol = Symbol(property)
 
-  if (!InjectedStoreClass) {
-    InjectedStoreClass = Reflect.getMetadata('design:type', target, property)
-    if (!InjectedStoreClass) {
-      throw new SyntaxError(
-        `You must pass a Class for injection while you are not using typescript! Or you may need to add "emitDecoratorMetadata: true" configuration to your tsconfig.json`
-      )
-    }
-  }
+  // if (!InjectedStoreClass) {
+  //   InjectedStoreClass = Reflect.getMetadata('design:type', target, property)
+  //   if (!InjectedStoreClass) {
+  //     throw new SyntaxError(
+  //       `You must pass a Class for injection while you are not using typescript! Or you may need to add "emitDecoratorMetadata: true" configuration to your tsconfig.json`
+  //     )
+  //   }
+  // }
 
   const clazz = InjectedStoreClass as any
 
@@ -30,7 +30,7 @@ export default <T extends StoreBase<T>>(
   return {
     enumerable: true,
     configurable: true,
-    get(this: any): Readonly<T> {
+    get(this: any): any {
       if (!this[propertySymbol]) {
         const forceUpdate = this.forceUpdate?.bind(this)
 
@@ -51,7 +51,6 @@ export default <T extends StoreBase<T>>(
       }
       return this[propertySymbol]
     },
-
     set() {
       throw Error('store is readonly!')
     }

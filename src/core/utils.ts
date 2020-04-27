@@ -67,8 +67,8 @@ export const mergeOptions = (options: Options) => {
   const newOptions = { ...globalOptions, ...options }
 
   if (options?.ignoreMiddlewares?.length) {
-    newOptions.middlewares = newOptions.middlewares?.filter(item =>
-      options?.ignoreMiddlewares?.find(item)
+    newOptions.middlewares = newOptions.middlewares?.filter(
+      item => !!options?.ignoreMiddlewares?.find(item as any)
     )
   }
 
@@ -83,12 +83,12 @@ export const mergeOptions = (options: Options) => {
 
 export const collectDependence = <T extends StoreBase<T>>(instance: T, updaters: Lisener[]) => {
   return new Proxy(instance, {
-    get(target, key: string) {
+    get(target, key) {
       let result = (target as any)[key]
 
       if (typeof key !== 'symbol' && typeof result !== 'function') {
         updaters.forEach(item => {
-          item.watchedProps.add(key)
+          item.watchedProps.add(String(key))
         })
       }
 

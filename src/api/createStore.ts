@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
-import { useInjection, injection } from '..'
 import getInjection from './getInjection'
-
 import preLoad from './preLoad'
-
 import StoreBase from './StoreBase'
+import useInjection from './useInjection'
+import injection from './injection'
 
 const createStore = <T extends StoreBase<T>, U extends Payload<T>>(
   InjectedStoreClass: Constructor<T>

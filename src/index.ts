@@ -1,7 +1,7 @@
 import store from './api/store'
-import { config } from 'process'
 import createStore from './api/createStore'
 import StoreBase from './api/StoreBase'
+import config from './api/config'
 
 export { config, store, createStore, StoreBase }
 

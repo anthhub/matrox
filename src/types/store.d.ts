@@ -6,7 +6,7 @@ type PlainObject = {
   [propName: string]: any
 }
 
-type GlobalOptions<> = {
+type GlobalOptions = {
   middlewares?: MiddleWare[]
 }
 

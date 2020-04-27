@@ -38,7 +38,7 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
     if (model === 'force') {
       return forceUpdate(getEffectiveLiseners(this[_meta].liseners, updateObject))
     } else {
-      return await batchingUpdate(getEffectiveLiseners(this[_meta].liseners, updateObject))
+      return batchingUpdate(getEffectiveLiseners(this[_meta].liseners, updateObject))
     }
   }
 
@@ -53,7 +53,7 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
   }
 
   setPropsForce = (payload: Payload<T>, type?: U) => {
-    this[_dispatchAction]({ payload, type }, 'force')
+    return this[_dispatchAction]({ payload, type }, 'force')
   }
 
   setProps = async (
