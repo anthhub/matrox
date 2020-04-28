@@ -29,18 +29,6 @@ export const forceUpdate = (liseners: Lisener[]) => {
   liseners.forEach(item => item?.forceUpdate?.())
 }
 
-export const reduceUpdateObject = <T extends PlainObject, U extends PlainObject>(
-  target: T,
-  updateObject: U
-): U => {
-  return Object.keys(updateObject).reduce((res: any, key) => {
-    if (updateObject[key] !== target[key]) {
-      res[key] = updateObject[key]
-    }
-    return res
-  }, {})
-}
-
 export const getEffectiveLiseners = <T extends PlainObject>(
   liseners: Lisener[],
   updateObject: KVProps<T>
@@ -51,6 +39,18 @@ export const getEffectiveLiseners = <T extends PlainObject>(
     )
   )
   return effectiveLiseners
+}
+
+export const reduceUpdateObject = <T extends PlainObject, U extends PlainObject>(
+  target: T,
+  updateObject: U
+): U => {
+  return Object.keys(updateObject).reduce((res: any, key) => {
+    if (updateObject[key] !== target[key]) {
+      res[key] = updateObject[key]
+    }
+    return res
+  }, {})
 }
 
 export const updateTarget = <T extends PlainObject>(target: T, updateObject: KVProps<T>) => {
