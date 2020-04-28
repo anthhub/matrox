@@ -8,14 +8,16 @@ import {
 } from './StoreBaseUtils'
 import { Action, Meta, ActionFn, Payload, KVProps } from '../types/StoreBase'
 
-const _batchingMergePropsTimer = Symbol(`_batchingMergePropsTimer`)
+const _isBatchingUpdate = Symbol(`_isBatchingUpdate`)
 const _actionsMergedQueue = Symbol(`_actionsMergedQueue`)
-export const _dispatchAction = Symbol(`_dispatchAction`)
+const _dispatchAction = Symbol(`_dispatchAction`)
+const _mergeAction = Symbol(`_mergeAction`)
 
 export const _meta = Symbol(`_meta`)
 
 export default abstract class StoreBase<T = {}, U extends string = string> {
-  private [_batchingMergePropsTimer]: any
+  private [_isBatchingUpdate] = false
+
   private [_actionsMergedQueue]: Action<T, U | undefined>[] = []
 
   private [_meta]: Meta = {
@@ -43,6 +45,40 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
     }
   }
 
+  private [_mergeAction] = async () => {
+    const self = (this as unknown) as T
+    const propsMergedObject = this[_actionsMergedQueue].reduce(
+      (
+        res: KVProps<T>,
+        cur: Action<T, U | undefined> | ActionFn<T, U | undefined>,
+        index: number
+      ) => {
+        if (typeof cur === 'function') {
+          cur = cur(this as any)
+        }
+
+        const { payload, type } = compateAction(cur.payload, cur.type)
+
+        if (typeof payload === 'function' && index !== 0) {
+          this[_dispatchAction]({ payload: res, type })
+        }
+
+        const rs = typeof payload === 'function' ? payload(self) : payload
+
+        const payload1 = { ...res, ...rs }
+
+        if (typeof payload === 'function' && index !== this[_actionsMergedQueue].length - 1) {
+          this[_dispatchAction]({ payload: payload1, type })
+        }
+        return payload1
+      },
+      {}
+    )
+    this[_actionsMergedQueue] = []
+
+    await this[_dispatchAction]({ payload: propsMergedObject, type: undefined })
+  }
+
   updatePropsWithoutRender = (payload: Payload<T>): KVProps<T> => {
     const self = (this as unknown) as T
     const plainPayload = typeof payload === 'function' ? payload(self) : payload
@@ -61,50 +97,19 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
     payload: Payload<T> | Action<T, U | undefined> | ActionFn<T, U | undefined>,
     type?: U
   ): Promise<void> => {
-    cancelAnimationFrame(this[_batchingMergePropsTimer])
-    this[_batchingMergePropsTimer] = undefined
+    this[_isBatchingUpdate] = true
 
     let action = compateAction(payload, type)
 
     this[_actionsMergedQueue].push(action)
 
-    const self = (this as unknown) as T
+    return Promise.resolve().then(() => {
+      if (!this[_isBatchingUpdate]) {
+        return
+      }
+      this[_isBatchingUpdate] = false
 
-    return new Promise(resolve => {
-      this[_batchingMergePropsTimer] = requestAnimationFrame(async () => {
-        const propsMergedObject = this[_actionsMergedQueue].reduce(
-          (
-            res: KVProps<T>,
-            cur: Action<T, U | undefined> | ActionFn<T, U | undefined>,
-            index: number
-          ) => {
-            if (typeof cur === 'function') {
-              cur = cur(this as any)
-            }
-
-            const { payload, type } = compateAction(cur.payload, cur.type)
-
-            if (typeof payload === 'function' && index !== 0) {
-              this[_dispatchAction]({ payload: res, type })
-            }
-
-            const rs = typeof payload === 'function' ? payload(self) : payload
-
-            const payload1 = { ...res, ...rs }
-
-            if (typeof payload === 'function' && index !== this[_actionsMergedQueue].length - 1) {
-              this[_dispatchAction]({ payload: payload1, type })
-            }
-            return payload1
-          },
-          {}
-        )
-        this[_actionsMergedQueue] = []
-
-        await this[_dispatchAction]({ payload: propsMergedObject, type })
-
-        resolve()
-      })
+      this[_mergeAction]()
     })
   }
 }

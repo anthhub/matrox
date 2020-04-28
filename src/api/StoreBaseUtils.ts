@@ -4,10 +4,10 @@ import { PlainObject } from '../types/store'
 
 let allLiseners: Lisener[] = []
 
-let batchingUpdateTimer: number
+let isBatchingUpdate = false
 
 export const batchingUpdate = (liseners: Lisener[]) => {
-  cancelAnimationFrame(batchingUpdateTimer)
+  isBatchingUpdate = true
 
   liseners.forEach(item => {
     if (!allLiseners.find(it => it.comp === item.comp) && item.forceUpdate) {
@@ -15,13 +15,13 @@ export const batchingUpdate = (liseners: Lisener[]) => {
     }
   })
 
-  return new Promise(resolve => {
-    batchingUpdateTimer = requestAnimationFrame(() => {
-      allLiseners.forEach(item => item?.forceUpdate?.())
-      allLiseners = []
-
-      resolve()
-    })
+  return Promise.resolve().then(() => {
+    if (!isBatchingUpdate) {
+      return
+    }
+    isBatchingUpdate = false
+    allLiseners.forEach(item => item?.forceUpdate?.())
+    allLiseners = []
   })
 }
 
