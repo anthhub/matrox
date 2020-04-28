@@ -83,14 +83,18 @@ export const mergeOptions = (options: Options) => {
   return newOptions
 }
 
-export const collectDependence = <T extends StoreBase<T>>(instance: T, updaters: Lisener[]) => {
+export const collectDependence = <T extends StoreBase<T>>(
+  instance: T,
+  lisener: Lisener[],
+  ignoredProps: string[]
+) => {
   return new Proxy(instance, {
-    get(target, key) {
+    get(target, key: string | symbol) {
       let result = (target as any)[key]
 
-      if (typeof key !== 'symbol' && typeof result !== 'function') {
-        updaters.forEach(item => {
-          item.watchedProps.add(String(key))
+      if (typeof key !== 'symbol' && typeof result !== 'function' && !ignoredProps.includes(key)) {
+        lisener.forEach(item => {
+          item.watchedProps.add(key)
         })
       }
 

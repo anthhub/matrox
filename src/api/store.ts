@@ -1,12 +1,21 @@
+import 'reflect-metadata'
 import StoreBase, { _meta } from './StoreBase'
-import { Scope, Options, Constructor } from '../types/store'
+import { Options, Scope, Constructor } from '../types/store'
 
-const store = <S extends Scope>(scope: S, options?: Options<S>) => <T extends StoreBase<T>>(
+export default <S extends Scope>(scope: S, options?: Options<S>) => <T extends StoreBase<T>>(
   target: Constructor<T>
 ): Constructor<T> => {
-  ;(target as any)[_meta] = { scope, options }
+  const ignoredProps: string[] = []
+
+  for (let key in target.prototype) {
+    const ignoredProperty: string = Reflect.getMetadata('ignoredProperty', target.prototype, key)
+
+    if (ignoredProperty) {
+      ignoredProps.push(ignoredProperty)
+    }
+  }
+
+  ;(target as any)[_meta] = { scope, options, ignoredProps }
 
   return target
 }
-
-export default store

@@ -1,9 +1,9 @@
 import { genStoreKey, mergeOptions, collectDependence } from './utils'
-import StoreBase, { _meta } from '../api/StoreBase'
+import StoreBase, { _meta, _updatePropsWithoutRender } from '../api/StoreBase'
 
 import applyMiddleware from '../middleware/applyMiddleware'
 import { Constructor, SessionOptions } from '../types/store'
-import { Payload, Lisener, KVProps } from '../types/StoreBase'
+import { Payload, Lisener, KVProps, Meta } from '../types/StoreBase'
 
 let cachedInjector: Injector
 
@@ -58,7 +58,9 @@ class Injector {
     liseners: Lisener[],
     identify?: any
   ): T {
-    const { scope, options: options1 } = (InjectedStoreClass as any)[_meta]
+    const { scope, options: options1, ignoredProps = [] } = (InjectedStoreClass as any)[
+      _meta
+    ] as Meta
 
     const options = mergeOptions(options1)
 
@@ -104,7 +106,7 @@ class Injector {
         params = args
       }
 
-      instance.updatePropsWithoutRender({ ...params })
+      instance[_updatePropsWithoutRender]({ ...params })
 
       if (options?.middlewares?.length) {
         applyMiddleware(...(options.middlewares || []))(instance)
@@ -113,7 +115,7 @@ class Injector {
       container.set(key, instance)
     }
 
-    const instanceProxy = collectDependence(instance, liseners)
+    const instanceProxy = collectDependence(instance, liseners, ignoredProps)
 
     return instanceProxy
   }

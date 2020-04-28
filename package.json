@@ -121,7 +121,8 @@
   },
   "peerDependencies": {
     "@types/react": "^16.9.34",
-    "react": "^16.13.1"
+    "react": "^16.13.1",
+    "reflect-metadata": "^0.1.13"
   },
   "dependencies": {}
 }

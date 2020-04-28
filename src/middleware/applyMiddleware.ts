@@ -1,5 +1,5 @@
 import compose from './compose'
-import StoreBase, { _meta } from '../api/StoreBase'
+import StoreBase, { _meta, _updatePropsWithoutRender } from '../api/StoreBase'
 import { MiddleWare, StoreAPI } from '../types/middleware'
 
 const applyMiddleware = (...middlewares: MiddleWare[]) => {
@@ -14,7 +14,7 @@ const applyMiddleware = (...middlewares: MiddleWare[]) => {
 
     const storeAPI: StoreAPI = {
       meta: rest,
-      updatePropsWithoutRender: store.updatePropsWithoutRender,
+      updatePropsWithoutRender: store[_updatePropsWithoutRender],
       getState: () => JSON.parse(JSON.stringify(store)),
       dispatch: store.setProps
     }

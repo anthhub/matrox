@@ -12,6 +12,7 @@ const _isBatchingUpdate = Symbol(`_isBatchingUpdate`)
 const _actionsMergedQueue = Symbol(`_actionsMergedQueue`)
 const _dispatchAction = Symbol(`_dispatchAction`)
 const _mergeAction = Symbol(`_mergeAction`)
+export const _updatePropsWithoutRender = Symbol(`_updatePropsWithoutRender`)
 
 export const _meta = Symbol(`_meta`)
 
@@ -25,7 +26,8 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
     options: {},
     scope: 'application',
     key: '',
-    storeName: ''
+    storeName: '',
+    ignoredProps: []
   }
 
   private [_dispatchAction] = async (
@@ -36,7 +38,7 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
       action = action(this as any)
     }
     const { payload } = action
-    const updateObject = this.updatePropsWithoutRender(payload)
+    const updateObject = this[_updatePropsWithoutRender](payload)
 
     if (model === 'force') {
       return forceUpdate(getEffectiveLiseners(this[_meta].liseners, updateObject))
@@ -79,7 +81,7 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
     await this[_dispatchAction]({ payload: propsMergedObject, type: undefined })
   }
 
-  updatePropsWithoutRender = (payload: Payload<T>): KVProps<T> => {
+  private [_updatePropsWithoutRender] = (payload: Payload<T>): KVProps<T> => {
     const self = (this as unknown) as T
     const plainPayload = typeof payload === 'function' ? payload(self) : payload
     const updateObject = reduceUpdateObject(this, plainPayload)

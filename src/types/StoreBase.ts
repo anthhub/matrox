@@ -31,4 +31,5 @@ export type Meta = {
   scope: Scope
   key: string
   storeName: string
+  ignoredProps: string[]
 }
