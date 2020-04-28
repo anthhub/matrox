@@ -20,6 +20,7 @@ describe('Injector utils', () => {
     const dom = new JSDOM()
     const document = { location: { toString: () => `https://www.npmjs.com/package/matrox` } }
     ;(global as any).document = { ...dom.window.document, ...document }
+
     const path = getUrlRelativePath()
 
     expect(path).toBe(`/package/matrox`)
@@ -79,9 +80,7 @@ describe('Injector utils', () => {
       sex = 'man'
       age = 18
 
-      eat = () => {
-        // eat
-      }
+      eat = () => undefined
     }
 
     const a = new A()
@@ -127,11 +126,6 @@ describe('Injector utils', () => {
 
     expect(() => (proxyInstance.name = 'stupid')).toThrow()
 
-    expect(
-      () =>
-        (proxyInstance.eat = () => {
-          return
-        })
-    ).toThrow()
+    expect(() => (proxyInstance.eat = () => undefined)).toThrow()
   })
 })

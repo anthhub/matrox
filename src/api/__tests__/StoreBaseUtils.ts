@@ -3,18 +3,53 @@ import {
   updateTarget,
   reduceUpdateObject,
   getEffectiveLiseners,
-  forceUpdate
+  forceUpdate,
+  batchingUpdate
 } from '../StoreBaseUtils'
 
 describe('StoreBaseUtils', () => {
-  test('function forceUpdate should call all forceUpdate of liseners', () => {
-    const mockForceUpdate1 = jest.fn(() => {
-      return
-    })
+  test('function batchingUpdate should merge multiple calling for batching update', () => {
+    const mockForceUpdate1 = jest.fn(() => undefined)
+    const mockForceUpdate2 = jest.fn(() => undefined)
+    const mockForceUpdate3 = jest.fn(() => undefined)
 
-    const mockForceUpdate2 = jest.fn(() => {
-      return
+    const lisener1 = { forceUpdate: mockForceUpdate1, comp: {}, watchedProps: new Set<string>() }
+    const lisener2 = { forceUpdate: mockForceUpdate2, comp: {}, watchedProps: new Set<string>() }
+    const lisener3 = { forceUpdate: mockForceUpdate3, comp: {}, watchedProps: new Set<string>() }
+
+    const liseners1 = [lisener1, lisener2]
+    const liseners2 = [lisener2, lisener3]
+
+    batchingUpdate(liseners1)
+    batchingUpdate(liseners2)
+    batchingUpdate(liseners1)
+
+    batchingUpdate(liseners1)
+    batchingUpdate(liseners2)
+    batchingUpdate(liseners1)
+
+    expect(mockForceUpdate1.mock.calls.length).toBe(0)
+    expect(mockForceUpdate2.mock.calls.length).toBe(0)
+    expect(mockForceUpdate2.mock.calls.length).toBe(0)
+
+    setTimeout(() => {
+      expect(mockForceUpdate1.mock.calls.length).toBe(1)
+      expect(mockForceUpdate2.mock.calls.length).toBe(1)
+      expect(mockForceUpdate2.mock.calls.length).toBe(1)
+
+      batchingUpdate(liseners1)
+
+      setTimeout(() => {
+        expect(mockForceUpdate1.mock.calls.length).toBe(2)
+        expect(mockForceUpdate2.mock.calls.length).toBe(2)
+        expect(mockForceUpdate2.mock.calls.length).toBe(1)
+      })
     })
+  })
+
+  test('function forceUpdate should call all forceUpdate of liseners', () => {
+    const mockForceUpdate1 = jest.fn(() => undefined)
+    const mockForceUpdate2 = jest.fn(() => undefined)
 
     const liseners = [
       {
@@ -29,28 +64,27 @@ describe('StoreBaseUtils', () => {
 
     expect(mockForceUpdate1.mock.calls.length).toBe(1)
     expect(mockForceUpdate2.mock.calls.length).toBe(1)
+
+    forceUpdate(liseners)
+
+    expect(mockForceUpdate1.mock.calls.length).toBe(2)
+    expect(mockForceUpdate2.mock.calls.length).toBe(2)
   })
 
   test('function getEffectiveLiseners should filter effective liseners', () => {
     const liseners = [
       {
-        forceUpdate: () => {
-          return
-        },
+        forceUpdate: () => undefined,
         comp: {},
         watchedProps: new Set<string>()
       },
       {
-        forceUpdate: () => {
-          return
-        },
+        forceUpdate: () => undefined,
         comp: {},
         watchedProps: new Set<string>('a')
       },
       {
-        forceUpdate: () => {
-          return
-        },
+        forceUpdate: () => undefined,
         comp: {},
         watchedProps: new Set<string>('b')
       }
@@ -86,9 +120,7 @@ describe('StoreBaseUtils', () => {
     class A {
       name = '1'
       age = 2
-      eat = () => {
-        return
-      }
+      eat = () => undefined
     }
     const a = new A()
 
