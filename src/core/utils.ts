@@ -1,7 +1,6 @@
 import StoreBase, { _meta } from '../api/StoreBase'
-import { globalOptions } from '../api/config'
 import persist from '../middleware/persist'
-import { Constructor, Scope, Options } from '../types/store'
+import { Constructor, Scope, Options, GlobalOptions } from '../types/store'
 import { Lisener } from '../types/StoreBase'
 
 export const getUrlRelativePath = () => {
@@ -44,13 +43,13 @@ export const getClassName = (clazz: Constructor<any>) => {
   return name1 || name2 || ''
 }
 
-export const genStoreKey = <T extends StoreBase<T>>(
+export const genClassKey = <T extends StoreBase<T>>(
   InjectedStoreClass: Constructor<T>,
   identify?: string
 ) => {
   const keyPrefix = hashCode('mobx-injection')
 
-  const scope: Scope = (InjectedStoreClass as any)[_meta].scope
+  const scope: Scope = (InjectedStoreClass as any)[_meta]?.scope
 
   const curPath = identify || getUrlRelativePath()
 
@@ -65,35 +64,37 @@ export const genStoreKey = <T extends StoreBase<T>>(
   return { key, className, classHaseCode, keyPostfix, keyPrefix }
 }
 
-export const mergeOptions = (options: Options) => {
+export const mergeOptions = (options: Options, globalOptions: GlobalOptions) => {
   const newOptions = { ...globalOptions, ...options }
+
+  newOptions.middlewares = [
+    ...new Set([...(globalOptions?.middlewares || []), ...(options?.middlewares || [])])
+  ]
+
+  if (newOptions?.persist && !newOptions?.middlewares?.includes(persist)) {
+    newOptions?.middlewares?.unshift(persist)
+  }
 
   if (options?.ignoreMiddlewares?.length) {
     newOptions.middlewares = newOptions.middlewares?.filter(
-      item => !!options?.ignoreMiddlewares?.find(item as any)
+      item => !options?.ignoreMiddlewares?.includes(item)
     )
-  }
-
-  newOptions.middlewares = [...(globalOptions?.middlewares || []), ...(options?.middlewares || [])]
-
-  if ((options as any)?.persist && !newOptions.middlewares.includes(persist)) {
-    newOptions.middlewares.push(persist)
   }
 
   return newOptions
 }
 
-export const collectDependence = <T extends StoreBase<T>>(
+export const collectDependences = <T extends StoreBase<T>>(
   instance: T,
-  lisener: Lisener[],
-  ignoredProps: string[]
-) => {
+  liseners: Lisener[],
+  ignoredProps: string[] = []
+): T => {
   return new Proxy(instance, {
     get(target, key: string | symbol) {
       let result = (target as any)[key]
 
       if (typeof key !== 'symbol' && typeof result !== 'function' && !ignoredProps.includes(key)) {
-        lisener.forEach(item => {
+        liseners.forEach(item => {
           item.watchedProps.add(key)
         })
       }

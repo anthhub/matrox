@@ -10,6 +10,7 @@ export type PlainObject = {
 
 export type GlobalOptions = {
   middlewares?: MiddleWare[]
+  persist?: boolean
 }
 
 export type StoreOptions = {
