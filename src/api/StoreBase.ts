@@ -62,7 +62,7 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
         const { payload, type } = compateAction(cur.payload, cur.type)
 
         if (typeof payload === 'function' && index !== 0) {
-          this[_dispatchAction]({ payload: res, type })
+          this[_updatePropsWithoutRender](payload)
         }
 
         const rs = typeof payload === 'function' ? payload(self) : payload
@@ -70,7 +70,7 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
         const payload1 = { ...res, ...rs }
 
         if (typeof payload === 'function' && index !== this[_actionsMergedQueue].length - 1) {
-          this[_dispatchAction]({ payload: payload1, type })
+          this[_updatePropsWithoutRender](payload1)
         }
         return payload1
       },
@@ -84,7 +84,13 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
   private [_updatePropsWithoutRender] = (payload: Payload<T>): KVProps<T> => {
     const self = (this as unknown) as T
     const plainPayload = typeof payload === 'function' ? payload(self) : payload
-    const updateObject = reduceUpdateObject(this, plainPayload)
+    let updateObject: any
+
+    try {
+      updateObject = reduceUpdateObject(this, plainPayload)
+    } catch (error) {
+      console.log(error)
+    }
 
     updateTarget((this as unknown) as T, updateObject)
 
@@ -92,7 +98,8 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
   }
 
   setPropsForce = (payload: Payload<T>, type?: U) => {
-    return this[_dispatchAction]({ payload, type }, 'force')
+    let action = compateAction(payload, type)
+    return this[_dispatchAction](action, 'force')
   }
 
   setProps = async (

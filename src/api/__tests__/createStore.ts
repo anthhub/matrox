@@ -1,8 +1,6 @@
 import store from '../store'
 import { StoreBase, createStore } from '../..'
 import { _meta } from '../StoreBase'
-import { JSDOM } from 'jsdom'
-import preLoad from '../preLoad'
 
 describe('createStore', () => {
   test(`function createStore should generate 'useStore, injectStore, getStore, preLoadStore, getState'`, () => {

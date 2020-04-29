@@ -45,7 +45,22 @@ export const reduceUpdateObject = <T extends PlainObject, U extends PlainObject>
   target: T,
   updateObject: U
 ): U => {
+  console.log(' updateObject', updateObject)
+
   return Object.keys(updateObject).reduce((res: any, key) => {
+    if (target[key] === undefined) {
+      console.log(target[key])
+      throw Error(`target don't exist the '${key}', please define it before using`)
+    }
+
+    if (typeof updateObject[key] !== typeof target[key]) {
+      throw Error(
+        `${updateObject[key]} can't assign to ${key} since the type of ${key} is ${typeof target[
+          key
+        ]} instead of ${typeof updateObject[key]}`
+      )
+    }
+
     if (updateObject[key] !== target[key]) {
       res[key] = updateObject[key]
     }
