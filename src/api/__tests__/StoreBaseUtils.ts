@@ -8,7 +8,7 @@ import {
 } from '../StoreBaseUtils'
 
 describe('StoreBaseUtils', () => {
-  test('function batchingUpdate should merge multiple calling for batching update', () => {
+  test('function batchingUpdate should merge multiple calling for batching update', done => {
     const mockForceUpdate1 = jest.fn(() => undefined)
     const mockForceUpdate2 = jest.fn(() => undefined)
     const mockForceUpdate3 = jest.fn(() => undefined)
@@ -30,19 +30,21 @@ describe('StoreBaseUtils', () => {
 
     expect(mockForceUpdate1.mock.calls.length).toBe(0)
     expect(mockForceUpdate2.mock.calls.length).toBe(0)
-    expect(mockForceUpdate2.mock.calls.length).toBe(0)
+    expect(mockForceUpdate3.mock.calls.length).toBe(0)
 
     setTimeout(() => {
       expect(mockForceUpdate1.mock.calls.length).toBe(1)
       expect(mockForceUpdate2.mock.calls.length).toBe(1)
-      expect(mockForceUpdate2.mock.calls.length).toBe(1)
+      expect(mockForceUpdate3.mock.calls.length).toBe(1)
 
       batchingUpdate(liseners1)
 
       setTimeout(() => {
         expect(mockForceUpdate1.mock.calls.length).toBe(2)
         expect(mockForceUpdate2.mock.calls.length).toBe(2)
-        expect(mockForceUpdate2.mock.calls.length).toBe(1)
+        expect(mockForceUpdate3.mock.calls.length).toBe(1)
+
+        done()
       })
     })
   })
@@ -73,21 +75,9 @@ describe('StoreBaseUtils', () => {
 
   test('function getEffectiveLiseners should filter effective liseners', () => {
     const liseners = [
-      {
-        forceUpdate: () => undefined,
-        comp: {},
-        watchedProps: new Set<string>()
-      },
-      {
-        forceUpdate: () => undefined,
-        comp: {},
-        watchedProps: new Set<string>('a')
-      },
-      {
-        forceUpdate: () => undefined,
-        comp: {},
-        watchedProps: new Set<string>('b')
-      }
+      { forceUpdate: () => undefined, comp: {}, watchedProps: new Set<string>() },
+      { forceUpdate: () => undefined, comp: {}, watchedProps: new Set<string>('a') },
+      { forceUpdate: () => undefined, comp: {}, watchedProps: new Set<string>('b') }
     ]
     const effectiveLiseners = getEffectiveLiseners(liseners, { a: 1 })
     expect(effectiveLiseners).toEqual([liseners[1]])

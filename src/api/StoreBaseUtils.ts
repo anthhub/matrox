@@ -78,7 +78,7 @@ export const updateTarget = <T extends PlainObject>(target: T, updateObject: KVP
       if (process.env.NODE_ENV === 'production') {
         return
       } else {
-        throw new Error('Forbid reseting member method of class!')
+        throw new Error('Forbid reseting method member of class!')
       }
     }
 
