@@ -26,28 +26,28 @@ describe('useInjection', () => {
     injectorAny.clear()
   })
 
-  // test("hook useInjection should just live form creation to destroy of it's creater component", async () => {
-  //   const arr = [A, B]
+  test("hook useInjection should just live form creation to destroy of it's creater component", async () => {
+    const arr = [A, B]
 
-  //   arr.forEach((Clazz: any) => {
-  //     const hook = renderHook(() => useInjection(Clazz))
-  //     const a = hook.result.current
+    arr.forEach((Clazz: any) => {
+      const hook = renderHook(() => useInjection(Clazz))
+      const a = hook.result.current
 
-  //     const hook1 = renderHook(() => useInjection(Clazz))
-  //     const a1 = hook1.result.current
+      const hook1 = renderHook(() => useInjection(Clazz))
+      const a1 = hook1.result.current
 
-  //     expect(a).toBe(a1)
+      expect(a).toStrictEqual(a1)
 
-  //     hook.rerender()
-  //     expect(a).toBe(hook.result.current)
+      hook.rerender()
+      expect(a).toStrictEqual(hook.result.current)
 
-  //     hook1.rerender()
-  //     expect(a1).toBe(hook1.result.current)
+      hook1.rerender()
+      expect(a1).toStrictEqual(hook1.result.current)
 
-  //     hook.unmount()
-  //     hook1.unmount()
-  //   })
-  // })
+      hook.unmount()
+      hook1.unmount()
+    })
+  })
 
   test(`the args parameter of get method of Injector class should effect the instance at it's initiation firstly`, () => {
     const hook = renderHook(() => useInjection(A, { name: '2' }))

@@ -119,12 +119,10 @@ class Injector {
       }
 
       container.set(key, instance)
-
-      const instanceProxy = collectDependences(instance, liseners, ignoredProps)
-
-      return instanceProxy
     }
 
-    return instance
+    const instanceProxy = collectDependences(instance, liseners, ignoredProps)
+
+    return instanceProxy
   }
 }
