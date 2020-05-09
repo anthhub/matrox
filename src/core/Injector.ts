@@ -21,6 +21,11 @@ class Injector {
     return new Injector()
   }
 
+  clear() {
+    this.appContainer.clear()
+    this.sessContainer.clear()
+  }
+
   subscribe<T extends StoreBase<T>>(
     InjectedStoreClass: Constructor<T>,
     arg: Payload<T> | undefined,
@@ -57,7 +62,7 @@ class Injector {
     InjectedStoreClass: Constructor<T>,
     args: Payload<T> = {},
     liseners: Lisener[],
-    identify?: any
+    identification?: string | number
   ): T {
     const { scope, options: options1, ignoredProps = [] } = (InjectedStoreClass as any)[
       _meta
@@ -69,9 +74,9 @@ class Injector {
 
     let container = scope === 'session' ? this.sessContainer : this.appContainer
 
-    const { key: classKey, className: storeName } = genClassKey(
+    const { key: classKey, className, keyPrefix, classHaseCode } = genClassKey(
       InjectedStoreClass,
-      String(identify || '')
+      String(identification || '')
     )
 
     const key = classKey
@@ -81,8 +86,8 @@ class Injector {
     if (!instance) {
       // clser session
       if (scope === 'session' && !(options as SessionOptions).multiton) {
-        ;[...(this.sessContainer.keys() as any)].forEach(async key => {
-          if (!new RegExp(`^${key}$`).test(key)) {
+        ;[...(this.sessContainer.keys() as any)].forEach(key => {
+          if (new RegExp(`^${keyPrefix}@${className}@${classHaseCode}@.*$`).test(key)) {
             this.sessContainer.get(key)?.componentWillUnmount?.()
             this.sessContainer.delete(key)
           }
@@ -97,7 +102,7 @@ class Injector {
         options,
         scope,
         key,
-        storeName
+        storeName: className
       }
 
       let params: KVProps<T>
@@ -114,10 +119,12 @@ class Injector {
       }
 
       container.set(key, instance)
+
+      const instanceProxy = collectDependences(instance, liseners, ignoredProps)
+
+      return instanceProxy
     }
 
-    const instanceProxy = collectDependences(instance, liseners, ignoredProps)
-
-    return instanceProxy
+    return instance
   }
 }

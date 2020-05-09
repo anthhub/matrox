@@ -45,13 +45,13 @@ export const getClassName = (clazz: Constructor<any>) => {
 
 export const genClassKey = <T extends StoreBase<T>>(
   InjectedStoreClass: Constructor<T>,
-  identify?: string
+  identification?: string
 ) => {
   const keyPrefix = hashCode('mobx-injection')
 
   const scope: Scope = (InjectedStoreClass as any)[_meta]?.scope
 
-  const curPath = identify || getUrlRelativePath()
+  const curPath = identification || getUrlRelativePath()
 
   const className = getClassName(InjectedStoreClass)
 

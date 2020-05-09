@@ -45,8 +45,6 @@ export const reduceUpdateObject = <T extends PlainObject, U extends PlainObject>
   target: T,
   updateObject: U
 ): U => {
-  console.log(' updateObject', updateObject)
-
   return Object.keys(updateObject).reduce((res: any, key) => {
     if (target[key] === undefined) {
       console.log(target[key])

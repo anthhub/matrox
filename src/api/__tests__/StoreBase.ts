@@ -46,7 +46,7 @@ describe('StoreBase', () => {
   const liseners = [lisener1, lisener2, lisener3]
   ;(storeA as any)[_meta].liseners = liseners
 
-  test('_updatePropsWithoutRender method should be to update class without render', async () => {
+  test('_updatePropsWithoutRender method should update class without render', async () => {
     expect((storeA as any)[_meta]).toEqual({
       liseners: liseners,
       options: options1,
@@ -64,7 +64,7 @@ describe('StoreBase', () => {
     expect(mockForceUpdate3.mock.calls.length).toBe(0)
   })
 
-  test('setProps method should be to merge actions, batching update class and batching render liseners', async () => {
+  test('setProps method should merge actions, batching update class and batching render liseners', async () => {
     // 批量更新api
     storeA.setProps({ age: 1 })
     storeA.setProps({ age: 2 }, 'one')
@@ -96,7 +96,7 @@ describe('StoreBase', () => {
     expect(mockForceUpdate3.mock.calls.length).toBe(0)
   })
 
-  test('setPropsForce method should be to update class and render liseners immediately', () => {
+  test('setPropsForce method should update class and render liseners immediately', () => {
     // 批量更新api
     storeA.setPropsForce({ money: 1 })
     expect(mockForceUpdate3.mock.calls.length).toBe(1)
