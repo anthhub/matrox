@@ -31,17 +31,17 @@ describe('Injector', () => {
     expect(injector).toBe(injector1)
   })
 
-  test('the get method of Injector class should get a same instance for a same class', () => {
-    const a = injector.get(A, {}, [])
-    const a1 = injector.get(A, {}, [])
-    expect(a).toBe(a1)
-    expect(injectorAny.appContainer.size).toBe(1)
+  // test('the get method of Injector class should get a same instance for a same class', () => {
+  //   const a = injector.get(A, {}, [])
+  //   const a1 = injector.get(A, {}, [])
+  //   expect(a).toBe(a1)
+  //   expect(injectorAny.appContainer.size).toBe(1)
 
-    const b = injector.get(B, {}, [])
-    const b1 = injector.get(B, {}, [])
-    expect(b).toBe(b1)
-    expect(injectorAny.sessContainer.size).toBe(1)
-  })
+  //   const b = injector.get(B, {}, [])
+  //   const b1 = injector.get(B, {}, [])
+  //   expect(b).toBe(b1)
+  //   expect(injectorAny.sessContainer.size).toBe(1)
+  // })
 
   test(`the args parameter of get method of Injector class should effect the instance at it's initiation firstly`, () => {
     const a = injector.get(A, { name: '2' }, [])
