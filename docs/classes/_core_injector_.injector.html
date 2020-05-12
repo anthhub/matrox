@@ -2374,6 +2374,9 @@ img {
 				<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
 					<a href="_core_injector_.injector.html#sesscontainer" class="tsd-kind-icon">sess<wbr>Container</a>
 				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+					<a href="_core_injector_.injector.html#clear" class="tsd-kind-icon">clear</a>
+				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-not-exported">
 					<a href="_core_injector_.injector.html#get" class="tsd-kind-icon">get</a>
 				</li>
@@ -2417,6 +2420,7 @@ img {
 					<section class="tsd-index-section tsd-is-not-exported">
 						<h3>Methods</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="_core_injector_.injector.html#clear" class="tsd-kind-icon">clear</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-not-exported"><a href="_core_injector_.injector.html#get" class="tsd-kind-icon">get</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-not-exported"><a href="_core_injector_.injector.html#subscribe" class="tsd-kind-icon">subscribe</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported"><a href="_core_injector_.injector.html#newinstance" class="tsd-kind-icon">new<wbr>Instance</a></li>
@@ -2433,7 +2437,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">app<wbr>Container<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = new Map()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/core/Injector.ts#L15">core/Injector.ts:15</a></li>
+						<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/core/Injector.ts#L16">core/Injector.ts:16</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2443,24 +2447,41 @@ img {
 				<div class="tsd-signature tsd-kind-icon">sess<wbr>Container<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = new Map()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/core/Injector.ts#L17">core/Injector.ts:17</a></li>
+						<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/core/Injector.ts#L18">core/Injector.ts:18</a></li>
 					</ul>
 				</aside>
 			</section>
 		</section>
 		<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 			<h2>Methods</h2>
-			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-not-exported">
-				<a name="get" class="tsd-anchor"></a>
-				<h3>get</h3>
-				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-not-exported">
-					<li class="tsd-signature tsd-kind-icon">get&lt;T&gt;<span class="tsd-signature-symbol">(</span>InjectedStoreClass<span class="tsd-signature-symbol">: </span><a href="../modules/_types_store_.html#constructor" class="tsd-signature-type">Constructor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, args<span class="tsd-signature-symbol">?: </span><a href="../modules/_types_storebase_.html#payload-1" class="tsd-signature-type">Payload</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, liseners<span class="tsd-signature-symbol">: </span><a href="../modules/_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span>, identify<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+				<a name="clear" class="tsd-anchor"></a>
+				<h3>clear</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+					<li class="tsd-signature tsd-kind-icon">clear<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/core/Injector.ts#L55">core/Injector.ts:55</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/core/Injector.ts#L24">core/Injector.ts:24</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-not-exported">
+				<a name="get" class="tsd-anchor"></a>
+				<h3>get</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-not-exported">
+					<li class="tsd-signature tsd-kind-icon">get&lt;T&gt;<span class="tsd-signature-symbol">(</span>InjectedStoreClass<span class="tsd-signature-symbol">: </span><a href="../modules/_types_store_.html#constructor" class="tsd-signature-type">Constructor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, args<span class="tsd-signature-symbol">?: </span><a href="../modules/_types_storebase_.html#payload-1" class="tsd-signature-type">Payload</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, liseners<span class="tsd-signature-symbol">: </span><a href="../modules/_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span>, identification<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/core/Injector.ts#L62">core/Injector.ts:62</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2481,7 +2502,7 @@ img {
 								<h5>liseners: <a href="../modules/_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span></h5>
 							</li>
 							<li>
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> identify: <span class="tsd-signature-type">any</span></h5>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> identification: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -2492,13 +2513,13 @@ img {
 				<a name="subscribe" class="tsd-anchor"></a>
 				<h3>subscribe</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-not-exported">
-					<li class="tsd-signature tsd-kind-icon">subscribe&lt;T&gt;<span class="tsd-signature-symbol">(</span>InjectedStoreClass<span class="tsd-signature-symbol">: </span><a href="../modules/_types_store_.html#constructor" class="tsd-signature-type">Constructor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, arg<span class="tsd-signature-symbol">: </span><a href="../modules/_types_storebase_.html#payload-1" class="tsd-signature-type">Payload</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span>, liseners<span class="tsd-signature-symbol">: </span><a href="../modules/_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span>, compType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"decorator"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"hooks"</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+					<li class="tsd-signature tsd-kind-icon">subscribe&lt;T&gt;<span class="tsd-signature-symbol">(</span>InjectedStoreClass<span class="tsd-signature-symbol">: </span><a href="../modules/_types_store_.html#constructor" class="tsd-signature-type">Constructor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, arg<span class="tsd-signature-symbol">: </span><a href="../modules/_types_storebase_.html#payload-1" class="tsd-signature-type">Payload</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span>, liseners<span class="tsd-signature-symbol">: </span><a href="../modules/_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span>, compType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"decorator"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"hooks"</span>, identification<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/core/Injector.ts#L23">core/Injector.ts:23</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/core/Injector.ts#L29">core/Injector.ts:29</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2521,6 +2542,9 @@ img {
 							<li>
 								<h5>compType: <span class="tsd-signature-type">"decorator"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"hooks"</span></h5>
 							</li>
+							<li>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> identification: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
 					</li>
@@ -2536,7 +2560,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/core/Injector.ts#L19">core/Injector.ts:19</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/core/Injector.ts#L20">core/Injector.ts:20</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <a href="_core_injector_.injector.html" class="tsd-signature-type">Injector</a></h4>

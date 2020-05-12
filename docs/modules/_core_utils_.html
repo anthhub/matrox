@@ -2366,10 +2366,10 @@ img {
 <nav class="tsd-navigation secondary">
 	<ul>
 		<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
-			<a href="_core_utils_.html#collectdependence" class="tsd-kind-icon">collect<wbr>Dependence</a>
+			<a href="_core_utils_.html#collectdependences" class="tsd-kind-icon">collect<wbr>Dependences</a>
 		</li>
 		<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
-			<a href="_core_utils_.html#genstorekey" class="tsd-kind-icon">gen<wbr>Store<wbr>Key</a>
+			<a href="_core_utils_.html#genclasskey" class="tsd-kind-icon">gen<wbr>Class<wbr>Key</a>
 		</li>
 		<li class=" tsd-kind-function tsd-parent-kind-external-module">
 			<a href="_core_utils_.html#getclassname" class="tsd-kind-icon">get<wbr>Class<wbr>Name</a>
@@ -2394,8 +2394,8 @@ img {
 					<section class="tsd-index-section ">
 						<h3>Functions</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_core_utils_.html#collectdependence" class="tsd-kind-icon">collect<wbr>Dependence</a></li>
-							<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_core_utils_.html#genstorekey" class="tsd-kind-icon">gen<wbr>Store<wbr>Key</a></li>
+							<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_core_utils_.html#collectdependences" class="tsd-kind-icon">collect<wbr>Dependences</a></li>
+							<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_core_utils_.html#genclasskey" class="tsd-kind-icon">gen<wbr>Class<wbr>Key</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_core_utils_.html#getclassname" class="tsd-kind-icon">get<wbr>Class<wbr>Name</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_core_utils_.html#geturlrelativepath" class="tsd-kind-icon">get<wbr>Url<wbr>Relative<wbr>Path</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_core_utils_.html#hashcode" class="tsd-kind-icon">hash<wbr>Code</a></li>
@@ -2408,16 +2408,16 @@ img {
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Functions</h2>
 			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
-				<a name="collectdependence" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagConst">Const</span> collect<wbr>Dependence</h3>
+				<a name="collectdependences" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagConst">Const</span> collect<wbr>Dependences</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
-					<li class="tsd-signature tsd-kind-icon">collect<wbr>Dependence&lt;T&gt;<span class="tsd-signature-symbol">(</span>instance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, updaters<span class="tsd-signature-symbol">: </span><a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+					<li class="tsd-signature tsd-kind-icon">collect<wbr>Dependences&lt;T&gt;<span class="tsd-signature-symbol">(</span>instance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, liseners<span class="tsd-signature-symbol">: </span><a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span>, ignoredProps<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/core/utils.ts#L86">core/utils.ts:86</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/core/utils.ts#L87">core/utils.ts:87</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2432,7 +2432,10 @@ img {
 								<h5>instance: <span class="tsd-signature-type">T</span></h5>
 							</li>
 							<li>
-								<h5>updaters: <a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span></h5>
+								<h5>liseners: <a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span></h5>
+							</li>
+							<li>
+								<h5><span class="tsd-flag ts-flagDefault value">Default value</span> ignoredProps: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -2440,16 +2443,16 @@ img {
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
-				<a name="genstorekey" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagConst">Const</span> gen<wbr>Store<wbr>Key</h3>
+				<a name="genclasskey" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagConst">Const</span> gen<wbr>Class<wbr>Key</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
-					<li class="tsd-signature tsd-kind-icon">gen<wbr>Store<wbr>Key&lt;T&gt;<span class="tsd-signature-symbol">(</span>InjectedStoreClass<span class="tsd-signature-symbol">: </span><a href="_types_store_.html#constructor" class="tsd-signature-type">Constructor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, identify<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>classHaseCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>className<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>keyPostfix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>keyPrefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></li>
+					<li class="tsd-signature tsd-kind-icon">gen<wbr>Class<wbr>Key&lt;T&gt;<span class="tsd-signature-symbol">(</span>InjectedStoreClass<span class="tsd-signature-symbol">: </span><a href="_types_store_.html#constructor" class="tsd-signature-type">Constructor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, identification<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>classHaseCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>className<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>keyPostfix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>keyPrefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/core/utils.ts#L47">core/utils.ts:47</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/core/utils.ts#L46">core/utils.ts:46</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2464,7 +2467,7 @@ img {
 								<h5>InjectedStoreClass: <a href="_types_store_.html#constructor" class="tsd-signature-type">Constructor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 							</li>
 							<li>
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> identify: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> identification: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>classHaseCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>className<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>keyPostfix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>keyPrefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></h4>
@@ -2498,7 +2501,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/core/utils.ts#L37">core/utils.ts:37</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/core/utils.ts#L36">core/utils.ts:36</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2521,7 +2524,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/core/utils.ts#L7">core/utils.ts:7</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/core/utils.ts#L6">core/utils.ts:6</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -2538,7 +2541,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/core/utils.ts#L20">core/utils.ts:20</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/core/utils.ts#L19">core/utils.ts:19</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2555,13 +2558,13 @@ img {
 				<a name="mergeoptions" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagConst">Const</span> merge<wbr>Options</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-					<li class="tsd-signature tsd-kind-icon">merge<wbr>Options<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="_types_store_.html#options" class="tsd-signature-type">Options</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{}</span></li>
+					<li class="tsd-signature tsd-kind-icon">merge<wbr>Options<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="_types_store_.html#options" class="tsd-signature-type">Options</a>, globalOptions<span class="tsd-signature-symbol">: </span><a href="_types_store_.html#globaloptions" class="tsd-signature-type">GlobalOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/core/utils.ts#L68">core/utils.ts:68</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/core/utils.ts#L67">core/utils.ts:67</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2569,8 +2572,13 @@ img {
 							<li>
 								<h5>options: <a href="_types_store_.html#options" class="tsd-signature-type">Options</a></h5>
 							</li>
+							<li>
+								<h5>globalOptions: <a href="_types_store_.html#globaloptions" class="tsd-signature-type">GlobalOptions</a></h5>
+							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{}</span></h4>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{}</span></h4>
+						<ul class="tsd-parameters">
+						</ul>
 					</li>
 				</ul>
 			</section>

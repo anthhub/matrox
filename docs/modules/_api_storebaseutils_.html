@@ -2369,7 +2369,7 @@ img {
 			<a href="_api_storebaseutils_.html#allliseners" class="tsd-kind-icon">all<wbr>Liseners</a>
 		</li>
 		<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-			<a href="_api_storebaseutils_.html#batchingupdatetimer" class="tsd-kind-icon">batching<wbr>Update<wbr>Timer</a>
+			<a href="_api_storebaseutils_.html#isbatchingupdate" class="tsd-kind-icon">is<wbr>Batching<wbr>Update</a>
 		</li>
 		<li class=" tsd-kind-function tsd-parent-kind-external-module">
 			<a href="_api_storebaseutils_.html#batchingupdate" class="tsd-kind-icon">batching<wbr>Update</a>
@@ -2382,6 +2382,9 @@ img {
 		</li>
 		<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
 			<a href="_api_storebaseutils_.html#geteffectiveliseners" class="tsd-kind-icon">get<wbr>Effective<wbr>Liseners</a>
+		</li>
+		<li class=" tsd-kind-function tsd-parent-kind-external-module">
+			<a href="_api_storebaseutils_.html#reducelisners" class="tsd-kind-icon">reduce<wbr>Lisners</a>
 		</li>
 		<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
 			<a href="_api_storebaseutils_.html#reduceupdateobject" class="tsd-kind-icon">reduce<wbr>Update<wbr>Object</a>
@@ -2401,7 +2404,7 @@ img {
 						<h3>Variables</h3>
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_api_storebaseutils_.html#allliseners" class="tsd-kind-icon">all<wbr>Liseners</a></li>
-							<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_api_storebaseutils_.html#batchingupdatetimer" class="tsd-kind-icon">batching<wbr>Update<wbr>Timer</a></li>
+							<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_api_storebaseutils_.html#isbatchingupdate" class="tsd-kind-icon">is<wbr>Batching<wbr>Update</a></li>
 						</ul>
 					</section>
 					<section class="tsd-index-section ">
@@ -2411,6 +2414,7 @@ img {
 							<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_api_storebaseutils_.html#compateaction" class="tsd-kind-icon">compate<wbr>Action</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_api_storebaseutils_.html#forceupdate" class="tsd-kind-icon">force<wbr>Update</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_api_storebaseutils_.html#geteffectiveliseners" class="tsd-kind-icon">get<wbr>Effective<wbr>Liseners</a></li>
+							<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_api_storebaseutils_.html#reducelisners" class="tsd-kind-icon">reduce<wbr>Lisners</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_api_storebaseutils_.html#reduceupdateobject" class="tsd-kind-icon">reduce<wbr>Update<wbr>Object</a></li>
 							<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_api_storebaseutils_.html#updatetarget" class="tsd-kind-icon">update<wbr>Target</a></li>
 						</ul>
@@ -2426,17 +2430,17 @@ img {
 				<div class="tsd-signature tsd-kind-icon">all<wbr>Liseners<span class="tsd-signature-symbol">:</span> <a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/api/StoreBaseUtils.ts#L5">api/StoreBaseUtils.ts:5</a></li>
+						<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/api/StoreBaseUtils.ts#L6">api/StoreBaseUtils.ts:6</a></li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-				<a name="batchingupdatetimer" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagLet">Let</span> batching<wbr>Update<wbr>Timer</h3>
-				<div class="tsd-signature tsd-kind-icon">batching<wbr>Update<wbr>Timer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<a name="isbatchingupdate" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagLet">Let</span> is<wbr>Batching<wbr>Update</h3>
+				<div class="tsd-signature tsd-kind-icon">is<wbr>Batching<wbr>Update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/api/StoreBaseUtils.ts#L7">api/StoreBaseUtils.ts:7</a></li>
+						<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/api/StoreBaseUtils.ts#L7">api/StoreBaseUtils.ts:7</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2447,13 +2451,13 @@ img {
 				<a name="batchingupdate" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagConst">Const</span> batching<wbr>Update</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-					<li class="tsd-signature tsd-kind-icon">batching<wbr>Update<span class="tsd-signature-symbol">(</span>liseners<span class="tsd-signature-symbol">: </span><a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li class="tsd-signature tsd-kind-icon">batching<wbr>Update<span class="tsd-signature-symbol">(</span>liseners<span class="tsd-signature-symbol">: </span><a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/api/StoreBaseUtils.ts#L9">api/StoreBaseUtils.ts:9</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/api/StoreBaseUtils.ts#L24">api/StoreBaseUtils.ts:24</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2462,7 +2466,7 @@ img {
 								<h5>liseners: <a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span></h5>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -2476,7 +2480,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/api/StoreBaseUtils.ts#L74">api/StoreBaseUtils.ts:74</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/api/StoreBaseUtils.ts#L105">api/StoreBaseUtils.ts:105</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2496,13 +2500,13 @@ img {
 				<a name="forceupdate" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagConst">Const</span> force<wbr>Update</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-					<li class="tsd-signature tsd-kind-icon">force<wbr>Update<span class="tsd-signature-symbol">(</span>liseners<span class="tsd-signature-symbol">: </span><a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					<li class="tsd-signature tsd-kind-icon">force<wbr>Update<span class="tsd-signature-symbol">(</span>liseners<span class="tsd-signature-symbol">: </span><a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/api/StoreBaseUtils.ts#L28">api/StoreBaseUtils.ts:28</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/api/StoreBaseUtils.ts#L39">api/StoreBaseUtils.ts:39</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2511,7 +2515,7 @@ img {
 								<h5>liseners: <a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span></h5>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -2519,13 +2523,13 @@ img {
 				<a name="geteffectiveliseners" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Effective<wbr>Liseners</h3>
 				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
-					<li class="tsd-signature tsd-kind-icon">get<wbr>Effective<wbr>Liseners&lt;T&gt;<span class="tsd-signature-symbol">(</span>liseners<span class="tsd-signature-symbol">: </span><a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span>, updateObject<span class="tsd-signature-symbol">: </span><a href="_types_storebase_.html#kvprops" class="tsd-signature-type">KVProps</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>comp<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>forceUpdate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">; </span>watchedProps<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></li>
+					<li class="tsd-signature tsd-kind-icon">get<wbr>Effective<wbr>Liseners&lt;T&gt;<span class="tsd-signature-symbol">(</span>liseners<span class="tsd-signature-symbol">: </span><a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span>, updateObject<span class="tsd-signature-symbol">: </span><a href="_types_storebase_.html#kvprops" class="tsd-signature-type">KVProps</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>comp<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>forceUpdate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">; </span>role<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">"store"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"comp"</span><span class="tsd-signature-symbol">; </span>watchedProps<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/api/StoreBaseUtils.ts#L44">api/StoreBaseUtils.ts:44</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/api/StoreBaseUtils.ts#L43">api/StoreBaseUtils.ts:43</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2543,7 +2547,33 @@ img {
 								<h5>updateObject: <a href="_types_storebase_.html#kvprops" class="tsd-signature-type">KVProps</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>comp<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>forceUpdate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">; </span>watchedProps<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></h4>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>comp<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>forceUpdate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">; </span>role<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">"store"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"comp"</span><span class="tsd-signature-symbol">; </span>watchedProps<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+				<a name="reducelisners" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagConst">Const</span> reduce<wbr>Lisners</h3>
+				<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+					<li class="tsd-signature tsd-kind-icon">reduce<wbr>Lisners<span class="tsd-signature-symbol">(</span>liseners<span class="tsd-signature-symbol">: </span><a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span>, reducedLiseners<span class="tsd-signature-symbol">: </span><a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>comp<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>forceUpdate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">; </span>role<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">"store"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"comp"</span><span class="tsd-signature-symbol">; </span>watchedProps<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/api/StoreBaseUtils.ts#L9">api/StoreBaseUtils.ts:9</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>liseners: <a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span></h5>
+							</li>
+							<li>
+								<h5>reducedLiseners: <a href="_types_storebase_.html#lisener" class="tsd-signature-type">Lisener</a><span class="tsd-signature-symbol">[]</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>comp<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>forceUpdate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">; </span>role<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">"store"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"comp"</span><span class="tsd-signature-symbol">; </span>watchedProps<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -2557,7 +2587,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/api/StoreBaseUtils.ts#L32">api/StoreBaseUtils.ts:32</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/api/StoreBaseUtils.ts#L55">api/StoreBaseUtils.ts:55</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2592,7 +2622,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/5f9b4d2/src/api/StoreBaseUtils.ts#L56">api/StoreBaseUtils.ts:56</a></li>
+								<li>Defined in <a href="https://github.com/anthhub/matrox/blob/fbb5b23/src/api/StoreBaseUtils.ts#L87">api/StoreBaseUtils.ts:87</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-type-parameters-title">Type parameters</h4>
