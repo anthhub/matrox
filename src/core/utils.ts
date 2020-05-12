@@ -91,7 +91,7 @@ export const collectDependences = <T extends StoreBase<T>>(
 ): T => {
   return new Proxy(instance, {
     get(target, key: string | symbol) {
-      let result = (target as any)[key]
+      const result = (target as any)[key]
 
       if (typeof key !== 'symbol' && typeof result !== 'function' && !ignoredProps.includes(key)) {
         liseners.forEach(item => {

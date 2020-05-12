@@ -32,7 +32,7 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
 
   private [_dispatchAction] = async (
     action: Action<T, U | undefined> | ActionFn<T, U | undefined>,
-    model: 'bactching' | 'force' = 'bactching'
+    model: 'bactching' | 'sync' = 'bactching'
   ) => {
     if (typeof action === 'function') {
       action = action(this as any)
@@ -46,7 +46,7 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
 
     const updateObject = this[_updatePropsWithoutRender](payload)
 
-    if (model === 'force') {
+    if (model === 'sync') {
       return forceUpdate(getEffectiveLiseners(this[_meta].liseners, updateObject))
     } else {
       return batchingUpdate(getEffectiveLiseners(this[_meta].liseners, updateObject))
@@ -92,23 +92,23 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
     const plainPayload = typeof payload === 'function' ? payload(self) : payload
     let updateObject: any
 
-    try {
-      updateObject = reduceUpdateObject(this, plainPayload)
-    } catch (error) {
-      console.log(error)
-    }
+    updateObject = reduceUpdateObject(this, plainPayload)
 
     updateTarget((this as unknown) as T, updateObject)
 
     return updateObject
   }
 
-  setPropsForce = (
+  forceUpdate = () => {
+    return forceUpdate(this[_meta].liseners)
+  }
+
+  setPropsFast = (
     payload: Payload<T> | Action<T, U | undefined> | ActionFn<T, U | undefined>,
     type?: U
   ) => {
     let action = compateAction(payload, type)
-    return this[_dispatchAction](action, 'force')
+    return this[_dispatchAction](action, 'sync')
   }
 
   setProps = async (

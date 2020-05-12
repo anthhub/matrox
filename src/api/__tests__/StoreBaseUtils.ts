@@ -49,7 +49,7 @@ describe('StoreBaseUtils', () => {
     })
   })
 
-  test('function forceUpdate should call all forceUpdate of liseners', () => {
+  test('function forceUpdate should call all forceUpdate of liseners', async () => {
     const mockForceUpdate1 = jest.fn(() => undefined)
     const mockForceUpdate2 = jest.fn(() => undefined)
 
@@ -62,12 +62,12 @@ describe('StoreBaseUtils', () => {
       { forceUpdate: mockForceUpdate2, comp: {}, watchedProps: new Set<string>('a') }
     ]
 
-    forceUpdate(liseners)
+    await forceUpdate(liseners)
 
     expect(mockForceUpdate1.mock.calls.length).toBe(1)
     expect(mockForceUpdate2.mock.calls.length).toBe(1)
 
-    forceUpdate(liseners)
+    await forceUpdate(liseners)
 
     expect(mockForceUpdate1.mock.calls.length).toBe(2)
     expect(mockForceUpdate2.mock.calls.length).toBe(2)

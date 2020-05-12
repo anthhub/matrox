@@ -23,6 +23,7 @@ export type Lisener = {
   forceUpdate: Function
   comp: any
   watchedProps: Set<string>
+  role?: 'store' | 'comp'
 }
 
 export type Meta = {

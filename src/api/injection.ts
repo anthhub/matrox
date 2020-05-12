@@ -2,7 +2,7 @@ import { getInjector } from '../core/Injector'
 
 import StoreBase, { _meta } from './StoreBase'
 import { Constructor } from '../types/store'
-import { Payload } from '../types/StoreBase'
+import { Payload, Lisener } from '../types/StoreBase'
 const injector = getInjector()
 
 const injection = <T extends StoreBase<T>>(
@@ -18,20 +18,19 @@ const injection = <T extends StoreBase<T>>(
     throw Error(`injection decorator can't be use to self!`)
   }
 
+  let liseners: Lisener[] = []
+
   return {
     enumerable: true,
     configurable: true,
     get(this: any): any {
-      let liseners: any[] = []
-
       if (!this[propertySymbol]) {
         this[propertySymbol] = true
 
         const forceUpdate = this.forceUpdate?.bind(this)
+        const role = this instanceof StoreBase ? 'store' : 'comp'
 
-        liseners = this[_meta]?.liseners || [
-          { forceUpdate, comp: this, watchedProps: new Set<string>() }
-        ]
+        liseners = [{ forceUpdate, comp: this, watchedProps: new Set<string>(), role }]
 
         const componentWillUnmount = this.componentWillUnmount
 

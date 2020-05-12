@@ -4,6 +4,7 @@ import { _meta, _updatePropsWithoutRender } from '../StoreBase'
 import getInjection from '../getInjection'
 import { genClassKey } from '../../core/utils'
 import { JSDOM } from 'jsdom'
+import { promises } from 'dns'
 
 describe('StoreBase', () => {
   const dom = new JSDOM()
@@ -96,41 +97,46 @@ describe('StoreBase', () => {
     expect(mockForceUpdate3.mock.calls.length).toBe(0)
   })
 
-  test('setPropsForce method should update class and render liseners immediately', () => {
+  test('setPropsFast method should update class and render liseners immediately', done => {
     // 批量更新api
-    storeA.setPropsForce({ money: 1 })
-    expect(mockForceUpdate3.mock.calls.length).toBe(1)
+    storeA.setPropsFast({ money: 1 })
+    expect(mockForceUpdate3.mock.calls.length).toBe(0)
     expect(storeA.money).toBe(1)
 
-    storeA.setPropsForce({ money: 2 }, 'one')
+    storeA.setPropsFast({ money: 2 }, 'one')
 
-    expect(mockForceUpdate3.mock.calls.length).toBe(2)
+    expect(mockForceUpdate3.mock.calls.length).toBe(0)
     expect(storeA.money).toBe(2)
 
-    storeA.setPropsForce({ money: 3 }, undefined)
+    storeA.setPropsFast({ money: 3 }, undefined)
 
-    expect(mockForceUpdate3.mock.calls.length).toBe(3)
+    expect(mockForceUpdate3.mock.calls.length).toBe(0)
     expect(storeA.money).toBe(3)
 
-    storeA.setPropsForce(() => ({ money: 4 }))
-    expect(mockForceUpdate3.mock.calls.length).toBe(4)
+    storeA.setPropsFast(() => ({ money: 4 }))
+    expect(mockForceUpdate3.mock.calls.length).toBe(0)
     expect(storeA.money).toBe(4)
 
-    storeA.setPropsForce({ money: 5 })
-    expect(mockForceUpdate3.mock.calls.length).toBe(5)
+    storeA.setPropsFast({ money: 5 })
+    expect(mockForceUpdate3.mock.calls.length).toBe(0)
     expect(storeA.money).toBe(5)
 
     // action形式
-    storeA.setPropsForce({ payload: { money: 6 }, type: 'two' })
-    expect(mockForceUpdate3.mock.calls.length).toBe(6)
+    storeA.setPropsFast({ payload: { money: 6 }, type: 'two' })
+    expect(mockForceUpdate3.mock.calls.length).toBe(0)
     expect(storeA.money).toBe(6)
 
     // 函数action
-    storeA.setPropsForce(() => ({ payload: { money: 7 }, type: 'three' }))
-    expect(mockForceUpdate3.mock.calls.length).toBe(7)
+    storeA.setPropsFast(() => ({ payload: { money: 7 }, type: 'three' }))
+    expect(mockForceUpdate3.mock.calls.length).toBe(0)
     expect(storeA.money).toBe(7)
 
     expect(mockForceUpdate1.mock.calls.length).toBe(0)
     expect(mockForceUpdate2.mock.calls.length).toBe(3)
+
+    Promise.resolve().then(() => {
+      expect(mockForceUpdate3.mock.calls.length).toBe(1)
+      done()
+    })
   })
 })

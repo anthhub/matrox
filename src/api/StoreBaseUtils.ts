@@ -1,19 +1,30 @@
 import { Lisener, KVProps } from '../types/StoreBase'
 
 import { PlainObject } from '../types/store'
+import { _meta } from './StoreBase'
 
 let allLiseners: Lisener[] = []
-
 let isBatchingUpdate = false
+
+export const reduceLisners = (liseners: Lisener[], reducedLiseners: Lisener[]) => {
+  const tmpLisener = [...reducedLiseners]
+
+  liseners
+    .map(item => (item.role === 'store' ? item.comp[_meta]?.liseners || [] : item))
+    .flat(1)
+    .forEach(item => {
+      if (!reducedLiseners.find(it => it.comp === item.comp) && item.forceUpdate) {
+        tmpLisener.push(item)
+      }
+    })
+
+  return tmpLisener
+}
 
 export const batchingUpdate = (liseners: Lisener[]) => {
   isBatchingUpdate = true
 
-  liseners.forEach(item => {
-    if (!allLiseners.find(it => it.comp === item.comp) && item.forceUpdate) {
-      allLiseners.push(item)
-    }
-  })
+  allLiseners = reduceLisners(liseners, allLiseners)
 
   return Promise.resolve().then(() => {
     if (!isBatchingUpdate) {
@@ -26,7 +37,7 @@ export const batchingUpdate = (liseners: Lisener[]) => {
 }
 
 export const forceUpdate = (liseners: Lisener[]) => {
-  liseners.forEach(item => item?.forceUpdate?.())
+  return batchingUpdate(liseners)
 }
 
 export const getEffectiveLiseners = <T extends PlainObject>(
@@ -47,16 +58,23 @@ export const reduceUpdateObject = <T extends PlainObject, U extends PlainObject>
 ): U => {
   return Object.keys(updateObject).reduce((res: any, key) => {
     if (target[key] === undefined) {
-      console.log(target[key])
-      throw Error(`target don't exist the '${key}', please define it before using`)
+      if (process.env.NODE_ENV === 'production') {
+        return
+      } else {
+        throw Error(`target don't exist the '${key}', please define it before using`)
+      }
     }
 
     if (typeof updateObject[key] !== typeof target[key]) {
-      throw Error(
-        `${updateObject[key]} can't assign to ${key} since the type of ${key} is ${typeof target[
-          key
-        ]} instead of ${typeof updateObject[key]}`
-      )
+      if (process.env.NODE_ENV === 'production') {
+        return
+      } else {
+        throw Error(
+          `${updateObject[key]} can't assign to ${key} since the type of ${key} is ${typeof target[
+            key
+          ]} instead of ${typeof updateObject[key]}`
+        )
+      }
     }
 
     if (updateObject[key] !== target[key]) {

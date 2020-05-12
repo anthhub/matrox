@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
 import getInjection from './getInjection'
-import preLoad from './preLoad'
+import preload from './preload'
 import StoreBase from './StoreBase'
 import useInjection from './useInjection'
 import injection from './injection'
@@ -15,13 +15,13 @@ const createStore = <T extends StoreBase<T>, U extends Payload<T>>(
   const injectStore = (args?: U) => injection(InjectedStoreClass, args)
   const getStore = (args?: U) => getInjection(InjectedStoreClass, args)
 
-  const preLoadStore = (args?: U) => preLoad(InjectedStoreClass, args)
+  const preloadStore = (args?: U) => preload(InjectedStoreClass, args)
 
   const getState = () => {
     return JSON.parse(JSON.stringify(getStore() || {}))
   }
 
-  return { useStore, injectStore, getStore, preLoadStore, getState }
+  return { useStore, injectStore, getStore, preloadStore, getState }
 }
 
 export default createStore

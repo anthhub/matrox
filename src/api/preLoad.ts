@@ -6,11 +6,11 @@ import StoreBase from './StoreBase'
 import { Payload } from '../types/StoreBase'
 import { Constructor } from '../types/store'
 
-const preLoad = <T extends StoreBase<T>, U extends Payload<T>>(
+const preload = <T extends StoreBase<T>, U extends Payload<T>>(
   InjectedStoreClass: Constructor<T>,
   args?: U
 ) => {
   getInjection(InjectedStoreClass, args)
 }
 
-export default preLoad
+export default preload

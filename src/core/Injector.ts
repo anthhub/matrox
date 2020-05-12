@@ -30,9 +30,10 @@ class Injector {
     InjectedStoreClass: Constructor<T>,
     arg: Payload<T> | undefined,
     liseners: Lisener[],
-    compType: 'decorator' | 'hooks'
+    compType: 'decorator' | 'hooks',
+    identification?: string | number
   ) {
-    const instance = this.get(InjectedStoreClass, arg, liseners)
+    const instance = this.get(InjectedStoreClass, arg, liseners, identification)
 
     const instanceLiseners: any[] = instance[_meta].liseners || []
 
@@ -89,6 +90,7 @@ class Injector {
         ;[...(this.sessContainer.keys() as any)].forEach(key => {
           if (new RegExp(`^${keyPrefix}@${className}@${classHaseCode}@.*$`).test(key)) {
             this.sessContainer.get(key)?.componentWillUnmount?.()
+
             this.sessContainer.delete(key)
           }
         })
