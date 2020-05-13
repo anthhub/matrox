@@ -1,13 +1,17 @@
-import { renderHook } from '@testing-library/react-hooks'
+import * as React from 'react'
+import { renderHook, act } from '@testing-library/react-hooks'
+import '@testing-library/jest-dom'
+import { render, fireEvent, screen } from '@testing-library/react'
 import useInjection from '../useInjection'
 import { store, StoreBase } from '../..'
-import { JSDOM } from 'jsdom'
 import { getInjector } from '../../core/Injector'
+import getInjection from '../getInjection'
 
 describe('useInjection', () => {
-  const dom = new JSDOM()
-  const document = { location: { toString: () => `https://www.npmjs.com/package/matrox` } }
-  ;(global as any).document = { ...dom.window.document, ...document }
+  @store('application')
+  class G extends StoreBase<G> {
+    title = '='
+  }
 
   @store('application')
   class A extends StoreBase<A> {
@@ -69,22 +73,6 @@ describe('useInjection', () => {
     expect(injectorAny.appContainer.size).toBe(1)
     expect(injectorAny.sessContainer.size).toBe(1)
 
-    // 改变url
-    const document = {
-      location: { toString: () => `https://www.npmjs.com/package/mobx-injection` }
-    }
-    ;(global as any).document = { ...dom.window.document, ...document }
-
-    // 不受影响
-    const hook4 = renderHook(() => useInjection(A, { name: '2' }))
-    const a2 = hook4.result.current
-    expect(a2.name).toBe('2')
-
-    // 重新实例化
-    const hook5 = renderHook(() => useInjection(B, { age: 4 }))
-    const b2 = hook5.result.current
-    expect(b2.age).toBe(4)
-
     hook.rerender()
     hook1.rerender()
     hook2.rerender()
@@ -97,10 +85,42 @@ describe('useInjection', () => {
     hook1.unmount()
     hook2.unmount()
     hook3.unmount()
-    hook4.unmount()
-    hook5.unmount()
 
     expect(injectorAny.appContainer.size).toBe(1)
     expect(injectorAny.sessContainer.size).toBe(0)
+  })
+
+  test("hook useInjection should just live form creation to destroy of it's creater component", async () => {
+    let count = 0
+    const Comp: React.FC = () => {
+      const a = useInjection(A)
+      const b = useInjection(B)
+
+      const changeName = () => {
+        a.setProps(({ name }) => ({ name: name + '-' }))
+      }
+
+      const changeAge = () => {
+        b.setProps(({ age }) => ({ age: age + 1 }))
+      }
+
+      React.useEffect(() => {
+        count++
+      })
+
+      return (
+        <div>
+          <div data-testid="name">{a.name}</div>
+          <div data-testid="age">{b.age} years old</div>
+          <button onClick={changeName}>changeName</button>
+          <button onClick={changeAge}>changeAge</button>
+        </div>
+      )
+    }
+
+    render(<Comp />)
+    expect(count).toBe(1)
+    expect(screen.getByText('1')).toBeInTheDocument()
+    expect(screen.getByText('1 years old')).toBeInTheDocument()
   })
 })

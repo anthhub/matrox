@@ -55,20 +55,6 @@ describe('Injector', () => {
 
     const b1 = injector.get(B, () => ({ age: 3 }), [])
     expect(b1.age).toBe(2)
-
-    // 改变url
-    const document = {
-      location: { toString: () => `https://www.npmjs.com/package/mobx-injection` }
-    }
-    ;(global as any).document = { ...dom.window.document, ...document }
-
-    // 不受影响
-    const a2 = injector.get(A, { name: '4' }, [])
-    expect(a2.name).toBe('2')
-
-    // 重新实例化
-    const b2 = injector.get(B, { age: 4 }, [])
-    expect(b2.age).toBe(4)
   })
 
   test(`the identification parameter of get method of Injector class should control the initiation of instance for session store`, () => {

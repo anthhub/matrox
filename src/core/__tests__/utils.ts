@@ -6,7 +6,7 @@ import {
   mergeOptions,
   collectDependences
 } from '../utils'
-import { JSDOM } from 'jsdom'
+
 import { StoreBase } from '../..'
 import { Options, GlobalOptions } from '../../types/store'
 import persist from '../../middleware/persist'
@@ -17,13 +17,8 @@ describe('Injector utils', () => {
   const A1 = A
 
   test('function getUrlRelativePath should get relative path', () => {
-    const dom = new JSDOM()
-    const document = { location: { toString: () => `https://www.npmjs.com/package/matrox` } }
-    ;(global as any).document = { ...dom.window.document, ...document }
-
     const path = getUrlRelativePath()
-
-    expect(path).toBe(`/package/matrox`)
+    expect(path).toBe(`/`)
   })
 
   test('function hashCode should generate a unique hash code', () => {
