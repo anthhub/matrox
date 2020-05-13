@@ -73,11 +73,11 @@ describe('StoreBase', () => {
 
     // 异步
     expect(mockForceUpdate2.mock.calls.length).toBe(0)
-    expect(storeA.age).toBe(3)
+    expect(storeA.age).toBe(0)
 
     storeA.setProps(() => ({ age: 4 }))
     expect(mockForceUpdate2.mock.calls.length).toBe(0)
-    expect(storeA.age).toBe(4)
+    expect(storeA.age).toBe(0)
 
     await storeA.setProps({ age: 5 })
     expect(mockForceUpdate2.mock.calls.length).toBe(1)
@@ -95,5 +95,24 @@ describe('StoreBase', () => {
 
     expect(mockForceUpdate1.mock.calls.length).toBe(0)
     expect(mockForceUpdate3.mock.calls.length).toBe(0)
+  })
+
+  test('forceUpdate method should batching update class and batching render liseners', async () => {
+    await storeA.forceUpdate()
+
+    expect(mockForceUpdate1.mock.calls.length).toBe(1)
+    expect(mockForceUpdate2.mock.calls.length).toBe(4)
+    expect(mockForceUpdate3.mock.calls.length).toBe(1)
+
+    // 批量更新
+    storeA.forceUpdate()
+    storeA.forceUpdate()
+    storeA.forceUpdate()
+
+    await Promise.resolve()
+
+    expect(mockForceUpdate1.mock.calls.length).toBe(2)
+    expect(mockForceUpdate2.mock.calls.length).toBe(5)
+    expect(mockForceUpdate3.mock.calls.length).toBe(2)
   })
 })

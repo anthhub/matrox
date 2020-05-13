@@ -21,23 +21,19 @@ export const reduceLisners = (liseners: Lisener[], reducedLiseners: Lisener[]) =
   return tmpLisener
 }
 
-export const batchingUpdate = (liseners: Lisener[]) => {
+export const batchingUpdate = async (liseners: Lisener[]) => {
   isBatchingUpdate = true
 
   allLiseners = reduceLisners(liseners, allLiseners)
 
-  return Promise.resolve().then(() => {
-    if (!isBatchingUpdate) {
-      return
-    }
-    isBatchingUpdate = false
-    allLiseners.forEach(item => item?.forceUpdate?.())
-    allLiseners = []
-  })
-}
+  await Promise.resolve()
 
-export const forceUpdate = (liseners: Lisener[]) => {
-  return batchingUpdate(liseners)
+  if (!isBatchingUpdate) {
+    return
+  }
+  isBatchingUpdate = false
+  allLiseners.forEach(item => item?.forceUpdate?.())
+  allLiseners = []
 }
 
 export const getEffectiveLiseners = <T extends PlainObject>(

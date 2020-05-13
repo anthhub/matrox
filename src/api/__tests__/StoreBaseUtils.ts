@@ -3,7 +3,6 @@ import {
   updateTarget,
   reduceUpdateObject,
   getEffectiveLiseners,
-  forceUpdate,
   batchingUpdate,
   reduceLisners
 } from '../StoreBaseUtils'
@@ -99,30 +98,6 @@ describe('StoreBaseUtils', () => {
         done()
       })
     })
-  })
-
-  test('function forceUpdate should call all forceUpdate of liseners', async () => {
-    const mockForceUpdate1 = jest.fn(() => undefined)
-    const mockForceUpdate2 = jest.fn(() => undefined)
-
-    const liseners = [
-      {
-        forceUpdate: mockForceUpdate1,
-        comp: {},
-        watchedProps: new Set<string>()
-      },
-      { forceUpdate: mockForceUpdate2, comp: {}, watchedProps: new Set<string>('a') }
-    ]
-
-    await forceUpdate(liseners)
-
-    expect(mockForceUpdate1.mock.calls.length).toBe(1)
-    expect(mockForceUpdate2.mock.calls.length).toBe(1)
-
-    await forceUpdate(liseners)
-
-    expect(mockForceUpdate1.mock.calls.length).toBe(2)
-    expect(mockForceUpdate2.mock.calls.length).toBe(2)
   })
 
   test('function getEffectiveLiseners should filter effective liseners', () => {

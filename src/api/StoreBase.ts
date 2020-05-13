@@ -1,6 +1,5 @@
 import {
   batchingUpdate,
-  forceUpdate,
   reduceUpdateObject,
   getEffectiveLiseners,
   updateTarget,
@@ -8,12 +7,19 @@ import {
 } from './StoreBaseUtils'
 import { Action, Meta, ActionFn, Payload, KVProps } from '../types/StoreBase'
 
+const _isBatchingUpdate = Symbol(`_isBatchingUpdate`)
+const _actionsMergedQueue = Symbol(`_actionsMergedQueue`)
 const _dispatchAction = Symbol(`_dispatchAction`)
+const _mergeAction = Symbol(`_mergeAction`)
 export const _updatePropsWithoutRender = Symbol(`_updatePropsWithoutRender`)
 
 export const _meta = Symbol(`_meta`)
 
 export default abstract class StoreBase<T = {}, U extends string = string> {
+  private [_isBatchingUpdate] = false
+
+  private [_actionsMergedQueue]: Action<T, U | undefined>[] = []
+
   private [_meta]: Meta = {
     liseners: [],
     options: {},
@@ -41,6 +47,40 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
     return batchingUpdate(getEffectiveLiseners(this[_meta].liseners, updateObject))
   }
 
+  private [_mergeAction] = async () => {
+    const self = (this as unknown) as T
+    const propsMergedObject = this[_actionsMergedQueue].reduce(
+      (res: KVProps<T>, cur: any, index: number) => {
+        if (typeof cur === 'function') {
+          cur = cur(this)
+        }
+
+        if (typeof cur.payload === 'function') {
+          cur.payload = cur.payload(this)
+        }
+
+        const { payload, type } = compateAction(cur.payload, cur.type)
+
+        if (typeof payload === 'function' && index !== 0) {
+          this[_updatePropsWithoutRender](payload)
+        }
+
+        const rs = typeof payload === 'function' ? payload(self) : payload
+
+        const payload1 = { ...res, ...rs }
+
+        if (typeof payload === 'function' && index !== this[_actionsMergedQueue].length - 1) {
+          this[_updatePropsWithoutRender](payload1)
+        }
+        return payload1
+      },
+      {}
+    )
+    this[_actionsMergedQueue] = []
+
+    await this[_dispatchAction]({ payload: propsMergedObject, type: undefined })
+  }
+
   private [_updatePropsWithoutRender] = (payload: Payload<T>): KVProps<T> => {
     const self = (this as unknown) as T
     const plainPayload = typeof payload === 'function' ? payload(self) : payload
@@ -54,14 +94,26 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
   }
 
   forceUpdate = () => {
-    return forceUpdate(this[_meta].liseners)
+    return batchingUpdate(this[_meta].liseners)
   }
 
-  setProps = (
+  setProps = async (
     payload: Payload<T> | Action<T, U | undefined> | ActionFn<T, U | undefined>,
     type?: U
-  ) => {
+  ): Promise<void> => {
+    this[_isBatchingUpdate] = true
+
     let action = compateAction(payload, type)
-    return this[_dispatchAction](action)
+
+    this[_actionsMergedQueue].push(action)
+
+    await Promise.resolve()
+
+    if (!this[_isBatchingUpdate]) {
+      return
+    }
+    this[_isBatchingUpdate] = false
+
+    await this[_mergeAction]()
   }
 }

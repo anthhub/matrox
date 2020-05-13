@@ -2,8 +2,8 @@ import { GlobalOptions } from '../types/store'
 
 export let globalOptions: GlobalOptions
 
-const config = (options: GlobalOptions) => {
+const globalConfig = (options: GlobalOptions) => {
   globalOptions = options
 }
 
-export default config
+export default globalConfig

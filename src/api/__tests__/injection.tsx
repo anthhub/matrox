@@ -156,6 +156,7 @@ describe('injection', () => {
     expect(count1).toBe(1)
 
     await Promise.resolve()
+    await Promise.resolve()
     expect(count).toBe(2)
     expect(count1).toBe(2)
     expect(warpper.getByText(`Comp I'm 101`)).toBeInTheDocument()
@@ -166,30 +167,34 @@ describe('injection', () => {
     fireEvent.click(warpper.getByText(/^changeName$/))
 
     await Promise.resolve()
+    await Promise.resolve()
+
     expect(count).toBe(3)
     expect(count1).toBe(3)
-    expect(warpper.getByText(`Comp I'm 10111`)).toBeInTheDocument()
-    expect(warpper1.getByText(`Comp1 I'm 10111`)).toBeInTheDocument()
+    expect(warpper.getByText(`Comp I'm 1011`)).toBeInTheDocument()
+    expect(warpper1.getByText(`Comp1 I'm 1011`)).toBeInTheDocument()
 
     // ignore 不渲染
     fireEvent.click(warpper.getByText(/^changeName0$/))
     fireEvent.click(warpper.getByText(/^changeName0$/))
 
     await Promise.resolve()
+    await Promise.resolve()
     expect(count).toBe(3)
     expect(count1).toBe(3)
-    expect(warpper.getByText(`Comp I'm 10111`)).toBeInTheDocument()
-    expect(warpper1.getByText(`Comp1 I'm 10111`)).toBeInTheDocument()
+    expect(warpper.getByText(`Comp I'm 1011`)).toBeInTheDocument()
+    expect(warpper1.getByText(`Comp1 I'm 1011`)).toBeInTheDocument()
 
     // 改变global 都渲染
     fireEvent.click(warpper.getByText(/^changeTitle$/))
 
     await Promise.resolve()
+    await Promise.resolve()
     expect(count).toBe(4)
     expect(count1).toBe(4)
-    expect(warpper.getByText(`Comp I'm 10111`)).toBeInTheDocument()
+    expect(warpper.getByText(`Comp I'm 1011`)).toBeInTheDocument()
     expect(warpper.getByText(`Comp =1`)).toBeInTheDocument()
-    expect(warpper1.getByText(`Comp1 I'm 10111`)).toBeInTheDocument()
+    expect(warpper1.getByText(`Comp1 I'm 1011`)).toBeInTheDocument()
 
     // 改变global 都渲染
     const g = getInjection(G)
@@ -198,21 +203,24 @@ describe('injection', () => {
     a?.changeName()
 
     await Promise.resolve()
+    await Promise.resolve()
 
     expect(count).toBe(5)
     expect(count1).toBe(5)
 
-    expect(warpper.getByText(`Comp I'm 101111`)).toBeInTheDocument()
+    expect(warpper.getByText(`Comp I'm 10111`)).toBeInTheDocument()
     expect(warpper.getByText(`Comp =11`)).toBeInTheDocument()
-    expect(warpper1.getByText(`Comp1 I'm 101111`)).toBeInTheDocument()
+    expect(warpper1.getByText(`Comp1 I'm 10111`)).toBeInTheDocument()
 
     // 外包调用
     g?.setProps({ title: 'g' })
     a?.setProps({ name: 'a' })
-    expect(g?.title).toBe('g')
-    expect(a?.name).toBe('a')
 
     await Promise.resolve()
+    await Promise.resolve()
+
+    expect(g?.title).toBe('g')
+    expect(a?.name).toBe('a')
 
     expect(count).toBe(6)
     expect(count1).toBe(6)

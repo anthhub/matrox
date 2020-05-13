@@ -1,10 +1,10 @@
 import { GlobalOptions } from '../../types/store'
-import { config } from '../..'
+import { globalConfig } from '../..'
 
 describe('config', () => {
   test('function config should config globalOptions', () => {
     const globalOptions: GlobalOptions = {}
-    config(globalOptions)
+    globalConfig(globalOptions)
 
     expect(globalOptions).toBe(globalOptions)
   })
