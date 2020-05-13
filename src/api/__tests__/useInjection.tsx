@@ -5,7 +5,6 @@ import { render, fireEvent, screen } from '@testing-library/react'
 import useInjection from '../useInjection'
 import { store, StoreBase } from '../..'
 import { getInjector } from '../../core/Injector'
-import getInjection from '../getInjection'
 
 describe('useInjection', () => {
   @store('application')
@@ -90,7 +89,7 @@ describe('useInjection', () => {
     expect(injectorAny.sessContainer.size).toBe(0)
   })
 
-  test("hook useInjection should just live form creation to destroy of it's creater component", async () => {
+  test(`component using hooks 'useInjection' should render accurately`, async () => {
     let count = 0
     const Comp: React.FC = () => {
       const a = useInjection(A)

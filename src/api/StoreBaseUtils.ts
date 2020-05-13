@@ -13,7 +13,7 @@ export const reduceLisners = (liseners: Lisener[], reducedLiseners: Lisener[]) =
     .map(item => (item.role === 'store' ? item.comp[_meta]?.liseners || [] : item))
     .flat(1)
     .forEach(item => {
-      if (!reducedLiseners.find(it => it.comp === item.comp) && item.forceUpdate) {
+      if (!tmpLisener.find(it => it.comp === item.comp) && item.forceUpdate) {
         tmpLisener.push(item)
       }
     })

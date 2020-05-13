@@ -4,10 +4,62 @@ import {
   reduceUpdateObject,
   getEffectiveLiseners,
   forceUpdate,
-  batchingUpdate
+  batchingUpdate,
+  reduceLisners
 } from '../StoreBaseUtils'
+import { StoreBase, store } from '../..'
+import { _meta } from '../StoreBase'
+import { Lisener } from '../../types/StoreBase'
 
 describe('StoreBaseUtils', () => {
+  test('function reduceLisners reduce lisners to remove identical lisner', () => {
+    const mockForceUpdate1 = () => undefined
+    const mockForceUpdate2 = () => undefined
+    const mockForceUpdate3 = () => undefined
+
+    const comp = {}
+    const comp1 = {}
+
+    const lisener1 = { forceUpdate: mockForceUpdate1, comp, watchedProps: new Set<string>() }
+    const lisener2 = { forceUpdate: mockForceUpdate2, comp, watchedProps: new Set<string>() }
+    const lisener3 = { forceUpdate: mockForceUpdate3, comp: comp1, watchedProps: new Set<string>() }
+    const lisener4 = { forceUpdate: undefined, comp: comp1, watchedProps: new Set<string>() } as any
+
+    const allLiseners = [lisener1, lisener2, lisener3, lisener4]
+    const liseners1 = [lisener1, lisener2]
+    const liseners2 = [lisener2, lisener3]
+    const effectLisners = liseners2
+    const liseners3 = [...liseners1, ...liseners2, lisener4]
+
+    expect(reduceLisners(liseners1, [])).toStrictEqual([lisener1])
+    expect(reduceLisners(liseners2, [])).toStrictEqual(liseners2)
+    expect(reduceLisners(liseners3, [])).toStrictEqual([lisener1, lisener3])
+
+    expect(reduceLisners(liseners1, effectLisners)).toStrictEqual(effectLisners)
+    expect(reduceLisners(liseners2, effectLisners)).toStrictEqual(effectLisners)
+    expect(reduceLisners(liseners3, effectLisners)).toStrictEqual(effectLisners)
+    expect(reduceLisners(allLiseners, effectLisners)).toStrictEqual(effectLisners)
+
+    // 多层的情况
+    @store('session')
+    class B extends StoreBase<B> {
+      age = 1
+    }
+
+    const b = new B()
+    b[_meta].liseners = liseners2
+
+    const lisener5: Lisener = {
+      forceUpdate: () => undefined,
+      comp: new B(),
+      watchedProps: new Set<string>(),
+      role: 'store'
+    }
+
+    expect(reduceLisners([lisener5, ...liseners2], liseners2)).toStrictEqual(liseners2)
+    expect(reduceLisners([lisener5, ...allLiseners], liseners2)).toStrictEqual(liseners2)
+  })
+
   test('function batchingUpdate should merge multiple calling for batching update', done => {
     const mockForceUpdate1 = jest.fn(() => undefined)
     const mockForceUpdate2 = jest.fn(() => undefined)

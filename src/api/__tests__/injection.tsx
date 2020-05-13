@@ -8,7 +8,7 @@ import { getInjector } from '../../core/Injector'
 import ignore from '../ignore'
 import getInjection from '../getInjection'
 
-describe('injection and injectedComponent', () => {
+describe('injection', () => {
   const injector = getInjector()
   const injectorAny: any = injector
 
@@ -139,7 +139,7 @@ describe('injection and injectedComponent', () => {
     expect(injectorAny.sessContainer.size).toBe(0)
   })
 
-  test('store parameters should just works once', async () => {
+  test(`component using hooks 'useInjection' should render accurately`, async () => {
     const warpper = render(<Comp />)
     const warpper1 = render(<Comp1 />)
 
