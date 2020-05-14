@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
     "jsx": "react",
     "downlevelIteration": true,
     "moduleResolution": "node",

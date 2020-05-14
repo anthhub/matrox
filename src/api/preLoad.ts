@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-
 import getInjection from './getInjection'
 
 import StoreBase from './StoreBase'

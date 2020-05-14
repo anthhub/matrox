@@ -8,7 +8,7 @@ export let globalOptions: GlobalOptions
  * @example
  * ```ts
  * import { GlobalOptions } from 'matrox'
- * globalConfig({})
+ * globalConfig({ persist : true })
  * ```
  *
  * @param  {GlobalOptions} options global options

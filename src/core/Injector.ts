@@ -99,7 +99,6 @@ class Injector {
       instance = new InjectedStoreClass(args)
 
       instance[_meta] = {
-        liseners: [],
         ...instance[_meta],
         options,
         scope,

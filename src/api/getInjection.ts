@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 import { getInjector } from '../core/Injector'
 
 import StoreBase, { _meta } from './StoreBase'

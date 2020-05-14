@@ -1,4 +1,4 @@
-import { store, ignore, createStore, StoreBase, globalConfig } from '..'
+import { globalConfig, store, ignore, createStore, StoreBase } from '..'
 
 describe('index', () => {
   test(`index should export ' config, store, ignore, createStore, StoreBase'`, () => {

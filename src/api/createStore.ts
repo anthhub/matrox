@@ -1,10 +1,8 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-
 import getInjection from './getInjection'
-import preload from './preload'
 import StoreBase from './StoreBase'
 import useInjection from './useInjection'
 import injection from './injection'
+import preload from './preload'
 import { Payload } from '../types/StoreBase'
 import { Constructor } from '../types/store'
 

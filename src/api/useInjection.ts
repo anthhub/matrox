@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 import { useEffect, useMemo } from 'react'
 
 import { getInjector } from '../core/Injector'
