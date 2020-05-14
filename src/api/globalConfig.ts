@@ -5,13 +5,13 @@ export let globalOptions: GlobalOptions
 /**
  * config add apply options for all store
  *
+ * @param  {GlobalOptions} options global options
+ *
  * @example
  * ```ts
  * import { GlobalOptions } from 'matrox'
  * globalConfig({ persist : true })
  * ```
- *
- * @param  {GlobalOptions} options global options
  *
  * @see https://github.com/anthhub/matrox#globalConfig
  */
