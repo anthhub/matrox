@@ -14,7 +14,20 @@ const _mergeAction = Symbol(`_mergeAction`)
 export const _updatePropsWithoutRender = Symbol(`_updatePropsWithoutRender`)
 
 export const _meta = Symbol(`_meta`)
-
+/**
+ * store must extends StoreBase
+ *
+ * @example
+ * ```ts
+ * import { store, StoreBase, StoreBase} from 'matrox'
+ *  @store('application', {})
+ * class Store extends StoreBase<Store> {
+ * }
+ *
+ * ```
+ *
+ * @see https://github.com/anthhub/matrox#store
+ */
 export default abstract class StoreBase<T = {}, U extends string = string> {
   private [_isBatchingUpdate] = false
 
@@ -92,11 +105,32 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
 
     return updateObject
   }
-
+  /**
+   * force render all components or stores using this store
+   *
+   * @example
+   * ```ts
+   * store.forceUpdate()
+   * ```
+   *
+   * @see https://github.com/anthhub/matrox#forceUpdate
+   */
   forceUpdate = () => {
     return batchingUpdate(this[_meta].liseners)
   }
-
+  /**
+   * merge action and batching update store or component using this store
+   *
+   * @param  {Payload<T>|Action<T} payload action or payload of action
+   * @param  {U} type? type of action
+   *
+   * @example
+   * ```ts
+   * store.setProps({ name:'marry' })
+   * ```
+   *
+   * @see https://github.com/anthhub/matrox#setProps
+   */
   setProps = async (
     payload: Payload<T> | Action<T, U | undefined> | ActionFn<T, U | undefined>,
     type?: U
