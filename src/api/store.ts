@@ -9,7 +9,7 @@ import { Options, Scope, Constructor } from '../types/store'
  *
  * @example
  * ```ts
- * import { store, StoreBase, StoreBase} from 'matrox'
+ * import { store, StoreBase } from 'matrox'
  * ＠store('application', {})
  * class Store extends StoreBase<Store> {
  * }
@@ -18,9 +18,11 @@ import { Options, Scope, Constructor } from '../types/store'
  *
  * @see https://github.com/anthhub/matrox#store
  */
-const store = <S extends Scope>(scope: S, options?: Options<S>) => <T extends StoreBase<T>>(
+const store = <S extends Scope = 'application'>(scope?: S, options?: Options<S>) => <
+  T extends StoreBase<T>
+>(
   target: Constructor<T>
-): Constructor<T> => {
+) => {
   const ignoredProps: string[] = []
 
   for (let key in target.prototype) {
@@ -31,7 +33,7 @@ const store = <S extends Scope>(scope: S, options?: Options<S>) => <T extends St
     }
   }
 
-  ;(target as any)[_meta] = { scope, options, ignoredProps }
+  ;(target as any)[_meta] = { scope: scope || 'application', options, ignoredProps }
 
   return target
 }
