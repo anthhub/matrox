@@ -21,8 +21,6 @@ export type ApplicationOptions = {
   persist?: boolean
 } & StoreOptions
 
-export type SessionOptions = {
-  multiton?: boolean
-} & StoreOptions
+export type SessionOptions = {} & StoreOptions
 
 export type Options<T = Scope> = T extends 'session' ? SessionOptions : ApplicationOptions

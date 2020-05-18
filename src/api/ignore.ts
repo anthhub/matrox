@@ -4,10 +4,9 @@ import 'reflect-metadata'
  *
  * @example
  * ```ts
- * import { store, StoreBase, StoreBase, ignore} from 'matrox'
- *  @store('application', {})
+ * import { ignore} from 'matrox'
  * class Store extends StoreBase<Store> {
- * @ignore name = 'Jack'
+ * `@`ignore name = 'Jack'
  * }
  *
  * ```

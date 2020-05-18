@@ -19,8 +19,7 @@ export const _meta = Symbol(`_meta`)
  *
  * @example
  * ```ts
- * import { store, StoreBase, StoreBase} from 'matrox'
- *  @store('application', {})
+ * import { StoreBase } from 'matrox'
  * class Store extends StoreBase<Store> {
  * }
  *

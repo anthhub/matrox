@@ -10,7 +10,7 @@ import { Options, Scope, Constructor } from '../types/store'
  * @example
  * ```ts
  * import { store, StoreBase } from 'matrox'
- * ＠store('application', {})
+ * `＠`store()
  * class Store extends StoreBase<Store> {
  * }
  *
