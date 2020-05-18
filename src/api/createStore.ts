@@ -3,7 +3,8 @@ import StoreBase from './StoreBase'
 import useInjection from './useInjection'
 import injection from './injection'
 import { Payload } from '../types/StoreBase'
-import { Constructor } from '../types/store'
+import { Constructor, Options, Scope } from '../types/store'
+import { store } from '..'
 /**
  * create a store and return `useStore, injectStore, getStore, preloadStore, getState`
  *
@@ -19,8 +20,12 @@ import { Constructor } from '../types/store'
  * @see https://github.com/anthhub/matrox#createStore
  */
 const createStore = <T extends StoreBase<T>, U extends Payload<T>>(
-  InjectedStoreClass: Constructor<T>
+  InjectedStoreClass: Constructor<T>,
+  scope: Scope = 'application',
+  options: Options = {}
 ) => {
+  InjectedStoreClass = store(scope, options)(InjectedStoreClass)
+
   /**
    * get a store for function component
    *
