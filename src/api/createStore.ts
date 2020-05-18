@@ -48,7 +48,7 @@ const createStore = <T extends StoreBase<T>, U extends Payload<T>>(
    *
    * @example
    * class Comp extends React.Component{
-   * @injectStore()
+   * `@`injectStore()
    * store: Readonly<Store>
    *  render(){
    *  return <div/>
