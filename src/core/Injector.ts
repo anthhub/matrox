@@ -1,7 +1,7 @@
 import { mergeOptions, collectDependences, genClassKey } from './utils'
 import StoreBase, { _meta, _updatePropsWithoutRender } from '../api/StoreBase'
 
-import { Constructor, SessionOptions } from '../types/store'
+import { Constructor } from '../types/store'
 import { Payload, Lisener, KVProps, Meta } from '../types/StoreBase'
 import { globalOptions } from '../api/globalConfig'
 import applyMiddleware from './applyMiddleware'
