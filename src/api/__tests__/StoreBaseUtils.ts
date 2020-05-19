@@ -6,9 +6,10 @@ import {
   batchingUpdate,
   reduceLisners
 } from '../StoreBaseUtils'
-import { StoreBase, store } from '../..'
+import { StoreBase } from '../..'
 import { _meta } from '../StoreBase'
 import { Lisener } from '../../types/StoreBase'
+import store from '../store'
 
 describe('StoreBaseUtils', () => {
   test('function reduceLisners reduce lisners to remove identical lisner', () => {

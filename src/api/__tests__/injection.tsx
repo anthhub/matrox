@@ -3,10 +3,11 @@ import injection from '../injection'
 import * as React from 'react'
 import '@testing-library/jest-dom'
 import { render, act, fireEvent } from '@testing-library/react'
-import { store, StoreBase } from '../..'
+import { StoreBase } from '../..'
 import { getInjector } from '../../core/Injector'
 import ignore from '../ignore'
 import getInjection from '../getInjection'
+import store from '../store'
 
 describe('injection', () => {
   const injector = getInjector()

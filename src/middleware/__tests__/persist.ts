@@ -1,8 +1,9 @@
 import StoreBase, { _meta } from '../../api/StoreBase'
-import { store } from '../..'
+
 import applyMiddleware from '../../core/applyMiddleware'
 import persist from '../persist'
 import { genClassKey } from '../../core/utils'
+import store from '../../api/store'
 
 describe('applyMiddleware', () => {
   test(`function applyMiddleware should call all middleware when excute 'setProps'`, async () => {

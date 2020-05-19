@@ -1,10 +1,11 @@
 import { Options } from '../../types/store'
-import { StoreBase, store, ignore } from '../..'
+import { StoreBase, ignore } from '../..'
 import { _meta, _updatePropsWithoutRender } from '../StoreBase'
 import getInjection from '../getInjection'
 import { genClassKey } from '../../core/utils'
 import { JSDOM } from 'jsdom'
 import { promises } from 'dns'
+import store from '../store'
 
 describe('StoreBase', () => {
   const dom = new JSDOM()

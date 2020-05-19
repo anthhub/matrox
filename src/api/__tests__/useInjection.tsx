@@ -3,8 +3,9 @@ import { renderHook, act } from '@testing-library/react-hooks'
 import '@testing-library/jest-dom'
 import { render, fireEvent, screen } from '@testing-library/react'
 import useInjection from '../useInjection'
-import { store, StoreBase } from '../..'
+import { StoreBase } from '../..'
 import { getInjector } from '../../core/Injector'
+import store from '../store'
 
 describe('useInjection', () => {
   @store('application')
