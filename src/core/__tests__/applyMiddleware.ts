@@ -1,8 +1,9 @@
 import applyMiddleware from '../applyMiddleware'
 import StoreBase from '../../api/StoreBase'
-import { store } from '../..'
+
 import { StoreAPI, Dispatch } from '../../types/middleware'
 import { Action } from '../../types/StoreBase'
+import store from '../../api/store'
 
 describe('applyMiddleware', () => {
   test(`function applyMiddleware should excute all middleware when excute 'setProps'`, async () => {

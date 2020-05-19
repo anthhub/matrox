@@ -99,21 +99,7 @@ export default class App extends React.Component {
 
 store 可以传入初始化参数可以是 `palin object`,或者是返回 `palin object`的`callback`
 
-如下方的例子一样, 我们可以通过 `createStore` 的第二个参数, 为 store 设置参数。
-
-```tsx
-import { StoreBase, createStore } from 'matrox'
-
-class CounterStore extends StoreBase<CounterStore> {
-  count = 0
-  increment = () => this.setProps({ count: this.count + 1 })
-  decrement = () => this.setProps(({ count }) => ({ count: count - 1 }))
-}
-
-const { useStore, injectStore } = createStore(CounterStore, { count: 1 })
-```
-
-或者可以在 `useStore` 或者 `injectStore` 传入参数, 例如在 function 组件中:
+如下方的例子一样, 我们可以在 `useStore` 或者 `injectStore` 传入参数, 例如在 function 组件中:
 
 > `注意:` `useStore`,`useStore`等初始化参数将会覆盖 `createStore`中的初始化参数
 
@@ -126,7 +112,7 @@ class CounterStore extends StoreBase<CounterStore> {
   decrement = () => this.setProps(({ count }) => ({ count: count - 1 }))
 }
 
-const { useStore, injectStore } = createStore(CounterStore, { count: 1 })
+const { useStore, injectStore } = createStore(CounterStore)
 
 export default function App() {
   const { count, increment, decrement } = useStore(() => {
@@ -223,11 +209,7 @@ class CounterStore extends StoreBase<CounterStore> {
   count = 0
 }
 
-const { getStore, getState, injectStore } = createStore(
-  CounterStore,
-  { count: 1 },
-  { isSessionStore: true }
-)
+const { getStore, getState, injectStore } = createStore(CounterStore, { isSessionStore: true })
 ```
 
 > `注意:` `getStore`, `getState` 以及 store 中的 被`@injectStore()` 对于 `isSession` 为 `true` 的 store 将会失效, 因为这种 store 是与组件傍生的, 只能使用在组件中.
@@ -244,11 +226,7 @@ class CounterStore extends StoreBase<CounterStore> {
 }
 
 // matrox 自带了persist中间件(只对普通store持久化), 有兴趣可以参考源码
-const { getStore, getState, injectStore } = createStore(
-  CounterStore,
-  { count: 1 },
-  { middleware: [persist] }
-)
+const { getStore, getState, injectStore } = createStore(CounterStore, { middleware: [persist] })
 ```
 
 当 store 太多的时候, 一个一个配置是十分麻烦的事所以提供了 `globalConfig` api 来提供全局配置, 在特定的 store 你还可以忽略某个中间件.
@@ -263,11 +241,9 @@ class CounterStore extends StoreBase<CounterStore> {
 }
 
 // matrox 自带了persist中间件(只对普通store持久化), 有兴趣可以参考源码
-const { getStore, getState, injectStore } = createStore(
-  CounterStore,
-  { count: 1 },
-  { ignoreMiddleware: [persist] }
-)
+const { getStore, getState, injectStore } = createStore(CounterStore, {
+  ignoreMiddleware: [persist]
+})
 ```
 
 你完全可以自己定义中间件, 来加强你的 store, 以下是内置 `persit` 中间件实例:
@@ -307,7 +283,7 @@ class CounterStore extends StoreBase<CounterStore> {
 }
 
 // getStore获取store实例, getState获取store序列化之后的plain object
-const { getStore, getState } = createStore(CounterStore, {}, { persist: true })
+const { getStore, getState } = createStore(CounterStore, { persist: true })
 ```
 
 ### 预加载

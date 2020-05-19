@@ -86,7 +86,7 @@ class Injector {
 
     if (!instance) {
       // clser session
-      if (scope === 'session' && !(options as SessionOptions).multiton) {
+      if (scope === 'session') {
         ;[...(this.sessContainer.keys() as any)].forEach(key => {
           if (new RegExp(`^${keyPrefix}@${className}@${classHaseCode}@.*$`).test(key)) {
             this.sessContainer.get(key)?.componentWillUnmount?.()

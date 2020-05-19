@@ -18,9 +18,7 @@ import { Options, Scope, Constructor } from '../types/store'
  *
  * @see https://github.com/anthhub/matrox#store
  */
-const store = <S extends Scope = 'application'>(scope?: S, options?: Options<S>) => <
-  T extends StoreBase<T>
->(
+const store = <S extends Scope>(scope: S, options?: Options<S>) => <T extends StoreBase<T>>(
   target: Constructor<T>
 ) => {
   const ignoredProps: string[] = []
@@ -33,7 +31,7 @@ const store = <S extends Scope = 'application'>(scope?: S, options?: Options<S>)
     }
   }
 
-  ;(target as any)[_meta] = { scope: scope || 'application', options, ignoredProps }
+  ;(target as any)[_meta] = { scope, options, ignoredProps }
 
   return target
 }
