@@ -1,6 +1,6 @@
 {
   "name": "matrox",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "description": "",
   "keywords": [],
   "main": "dist/matrox.umd.js",
@@ -103,6 +103,7 @@
     "husky": "^1.0.1",
     "jest": "24.8.0",
     "jest-config": "^23.6.0",
+    "jsdoc-escape-at": "^1.0.1",
     "jsdom": "^16.2.2",
     "lint-staged": "^8.0.0",
     "lodash.camelcase": "^4.3.0",

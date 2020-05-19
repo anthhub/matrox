@@ -1,7 +1,8 @@
 import { getInjector } from '../Injector'
-import { store, StoreBase } from '../..'
+import { StoreBase } from '../..'
 import { JSDOM } from 'jsdom'
 import { _meta } from '../../api/StoreBase'
+import store from '../../api/store'
 
 describe('Injector', () => {
   const dom = new JSDOM()

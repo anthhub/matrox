@@ -9,8 +9,8 @@ import { Options, Scope, Constructor } from '../types/store'
  *
  * @example
  * ```ts
- * import { store, StoreBase, StoreBase} from 'matrox'
- *  @store('application', {})
+ * import { store, StoreBase } from 'matrox'
+ * `＠`store()
  * class Store extends StoreBase<Store> {
  * }
  *
@@ -20,7 +20,7 @@ import { Options, Scope, Constructor } from '../types/store'
  */
 const store = <S extends Scope>(scope: S, options?: Options<S>) => <T extends StoreBase<T>>(
   target: Constructor<T>
-): Constructor<T> => {
+) => {
   const ignoredProps: string[] = []
 
   for (let key in target.prototype) {

@@ -9,6 +9,7 @@ export type PlainObject = {
 }
 
 export type GlobalOptions = {
+  isSessionStore?: boolean
   middlewares?: MiddleWare[]
   persist?: boolean
 }
@@ -17,12 +18,4 @@ export type StoreOptions = {
   ignoreMiddlewares?: MiddleWare[]
 } & GlobalOptions
 
-export type ApplicationOptions = {
-  persist?: boolean
-} & StoreOptions
-
-export type SessionOptions = {
-  multiton?: boolean
-} & StoreOptions
-
-export type Options<T = Scope> = T extends 'session' ? SessionOptions : ApplicationOptions
+export type Options<T = any> = StoreOptions
