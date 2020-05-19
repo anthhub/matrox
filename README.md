@@ -101,7 +101,7 @@ store 可以传入初始化参数可以是 `palin object`,或者是返回 `palin
 
 如下方的例子一样, 我们可以在 `useStore` 或者 `injectStore` 传入参数, 例如在 function 组件中:
 
-> `注意:` `useStore`,`useStore`等初始化参数将会覆盖 `createStore`中的初始化参数
+> `注意:` `useStore`,`useStore`等初始化参数只会使用实例化时的第一个的参数
 
 ```tsx
 import { StoreBase, createStore } from 'matrox'
@@ -212,7 +212,7 @@ class CounterStore extends StoreBase<CounterStore> {
 const { getStore, getState, injectStore } = createStore(CounterStore, { isSessionStore: true })
 ```
 
-> `注意:` `getStore`, `getState` 以及 store 中的 被`@injectStore()` 对于 `isSession` 为 `true` 的 store 将会失效, 因为这种 store 是与组件傍生的, 只能使用在组件中.
+> `注意:` `getStore`, `getState` 以及 store 中的 被`@injectStore()` 对于 `isSessionStore` 为 `true` 的 store 将会失效, 因为这种 store 是与组件傍生的, 只能使用在组件中. `session store`是以浏览器路由作为标识(出去 `qurey` 和 `hash`, 即`?`前的相对路径 ), 当路由改变时, 之前的 store 将会被销毁, 而创建新的无污染的 store; 反之, 路由不变,组件访问的就是同一个 store.
 
 ### 应用中间件
 
