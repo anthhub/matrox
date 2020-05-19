@@ -1,6 +1,6 @@
 import { MiddleWare } from './middleware'
 
-export type Scope = 'application' | 'seesion'
+export type Scope = 'application' | 'session'
 
 export type Constructor<T> = new (...args: any[]) => T
 
