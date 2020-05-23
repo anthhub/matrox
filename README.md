@@ -1,5 +1,3 @@
-[English](./README.md) | 简体中文
-
 # [Matrox](https://www.npmjs.com/package/matrox)
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/master/LICENSE)
@@ -31,11 +29,11 @@ npm install --save matrox
 
 ### 创建一个 store
 
-`matrox` 的 store 用法和 `mobx` 比较类似, 使用 class 形式继承 `StoreBase`, 则 store 实例拥有的 `setProps` 方法来改变状态. 和 `react` 类似, 只有通过 `setProps` 才能出发更新, 即单向数据流, 直接修改实例属性是不允许的. `setProps` 也可以接受 `palin onject`,和 返回 `palin object`的`callback`, 并有完善的类型推断.
+`matrox` 的 store 用法和 `mobx` 比较类似, 使用 class 形式继承 <a name="StoreBase">`StoreBase`</a>, 则 store 实例拥有的 `setProps` 方法来改变状态. 和 `react` 类似, 只有通过 <a name="setProps">`setProps`</a> 才能触发更新, 即单向数据流, 直接修改实例属性是不允许的. `setProps` 也可以接受 `plain onject`,和 返回 `plain object`的`callback`(就像 `setState` 那样), 并有完善的类型推断.
 
 > `注意:setProps` 返回 `Promise` 也是异步更新的, 会合并多个 `action`, 并且多个 store 的多个 `setProps` 也会合并在某个时机一起更新.
 
-通过 `createStore` 可以把 store class 生成 hooks -- `useStore` 在 funcion 组件使用; `injectStore` 在 class 组件中使用
+通过 <a name="createStore">`createStore`</a> 可以把 store class 生成 hooks -- <a name="useStore">`useStore`</a> 在 funcion 组件使用; <a name="injectStore">`injectStore`</a> 在 class 组件中使用
 
 ```tsx
 import { StoreBase, createStore } from 'matrox'
@@ -51,7 +49,7 @@ const { useStore, injectStore } = createStore(CounterStore)
 
 ### 使用 store
 
-还记得刚刚的 `useStore` 的返回值吗？在 function 组件中调用这个 Hook , 就可以获取到 store 了. 当订阅的 store 状态发生改变的时候, 将会出发组件重渲染.
+还记得刚刚的 `useStore` 的返回值吗？在 function 组件中调用这个 Hook , 就可以获取到 store 了. 当订阅的 store 状态发生改变的时候, 将会触发组件重渲染.
 
 ```tsx
 export default function App() {
@@ -168,7 +166,7 @@ const { useStore: useDoubleCounterStore, injectStore: injectDoubleCounterStore }
 
 使用过 `mobx` 的同学可能知道, 有时候我们并不需要观察某个数据, 仅仅把它当做全局变量使用, 我们应该如何做呢?
 
-如下面的例子一样，我们只需要加入`@ignore` 装饰器就可以了:
+如下面的例子一样，我们只需要加入 <a name="ignore">`@ignore`</a> 装饰器就可以了:
 
 ```tsx
 import { StoreBase, createStore } from 'matrox'
@@ -180,7 +178,7 @@ class CounterStore extends StoreBase<CounterStore> {
 
 ### 组件外获取 store 的状态
 
-有时候我们需要在组件外使用 store, 这时候我们可以如下:
+有时候我们需要在组件外使用 store, 这时候我们可以使用 <a name="getStore">`getStore`</a> 和 <a name="getState">`getState`</a>, 如下:
 
 ```tsx
 import { StoreBase, createStore } from 'matrox'
@@ -212,7 +210,7 @@ class CounterStore extends StoreBase<CounterStore> {
 const { getStore, getState, injectStore } = createStore(CounterStore, { isSessionStore: true })
 ```
 
-> `注意:` `getStore`, `getState` 以及 store 中的 被`@injectStore()` 对于 `isSessionStore` 为 `true` 的 store 将会失效, 因为这种 store 是与组件傍生的, 只能使用在组件中. `session store`是以浏览器路由作为标识(出去 `qurey` 和 `hash`, 即`?`前的相对路径 ), 当路由改变时, 之前的 store 将会被销毁, 而创建新的无污染的 store; 反之, 路由不变,组件访问的就是同一个 store.
+> `注意:` `getStore`, `getState` 以及 store 中的 被`@injectStore()` 对于 `isSessionStore` 为 `true` 的 store 将会失效, 因为这种 store 是与组件伴生的, 只能使用在组件中. `session store`是以浏览器路由作为标识(出去 `qurey` 和 `hash`, 即`?`前的相对路径 ), 当路由改变时, 之前的 store 将会被销毁, 而创建新的无污染的 store; 反之, 路由不变, 组件访问的就是同一个 store.
 
 ### 应用中间件
 
@@ -229,7 +227,7 @@ class CounterStore extends StoreBase<CounterStore> {
 const { getStore, getState, injectStore } = createStore(CounterStore, { middleware: [persist] })
 ```
 
-当 store 太多的时候, 一个一个配置是十分麻烦的事所以提供了 `globalConfig` api 来提供全局配置, 在特定的 store 你还可以忽略某个中间件.
+当 store 太多的时候, 一个一个配置是十分麻烦的事所以提供了 <a name="globalConfig">`globalConfig`</a> api 来提供全局配置, 在特定的 store 你还可以忽略某个中间件.
 
 ```tsx
 import { StoreBase, createStore, globalConfig } from 'matrox'
@@ -246,7 +244,7 @@ const { getStore, getState, injectStore } = createStore(CounterStore, {
 })
 ```
 
-你完全可以自己定义中间件, 来加强你的 store, 以下是内置 `persit` 中间件实例:
+你完全可以自己定义中间件, 来加强你的 store, 以下是内置 `persit` 中间件示例:
 
 ```tsx
 import { MiddleWare, StoreAPI, Dispatch } from '../types/middleware'
@@ -288,14 +286,14 @@ const { getStore, getState } = createStore(CounterStore, { persist: true })
 
 ### 预加载
 
-`matrox` 有预加载 store 的功能. 例如你需要请求一个非常的的 menu tree 数据, 你可以使用 `preloadStore` 提前实例化 store, 来预加载数据:
+`matrox` 有预加载 store 的功能. 例如你需要请求一个非常大的 menu tree 数据, 你可以使用 <a name="preloadStore">`preloadStore`</a> 提前实例化 store, 来预加载数据:
 
 ```tsx
 // store.ts
 import { StoreBase, createStore } from 'matrox'
 
 class CounterStore extends StoreBase<CounterStore> {
-  data = 0
+  data: any[] = []
 
   constructor() {
     super()
@@ -318,5 +316,5 @@ preloadStore()
 
 ### 依赖收集和性能优化
 
-- `matrox` 内部使用和 `mobx` 一样的 `Proxy` api 来进行依赖收集(只收集浅层数据,所以 store 内部数据无需`toJS`), 所以当你组件只订阅了其使用属性的更新.
-- 为了应用批量更新策略, store 继承的 `setProps`, `forceUpdate` 方法均是异步的, 如果需要使用更新之后的数据, 请使用`.then()`方法, 或者使用 `await` 关键字.
+- `matrox` 内部使用和 `mobx` 一样的 `Proxy` api 来进行依赖收集(只收集浅层数据,所以 store 内部数据无需`toJS`), 所以当你组件只订阅了其使用 store 属性的更新.
+- 为了应用批量更新策略, store 继承的 `setProps`, <a name="forceUpdate">`forceUpdate`</a> 方法均是异步的, 如果需要使用更新之后的数据, 请使用`.then()`方法, 或者使用 `await` 关键字.
