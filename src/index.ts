@@ -1,4 +1,3 @@
-import store from './api/store'
 import createStore from './api/createStore'
 import StoreBase from './api/StoreBase'
 

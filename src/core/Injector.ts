@@ -1,8 +1,8 @@
-import { mergeOptions, collectDependences, genClassKey } from './utils'
+import { mergeOptions, collectDependences, genClassKey, getInitialValues } from './utils'
 import StoreBase, { _meta, _updatePropsWithoutRender } from '../api/StoreBase'
 
 import { Constructor } from '../types/store'
-import { Payload, Lisener, KVProps, Meta } from '../types/StoreBase'
+import { Payload, Lisener, KVProps, Meta, CompType } from '../types/StoreBase'
 import { globalOptions } from '../api/globalConfig'
 import applyMiddleware from './applyMiddleware'
 
@@ -15,31 +15,27 @@ export const getInjector = () => {
 class Injector {
   private readonly appContainer = new Map()
 
-  private readonly sessContainer = new Map()
-
   static newInstance() {
     return new Injector()
   }
 
   clear() {
     this.appContainer.clear()
-    this.sessContainer.clear()
   }
 
   subscribe<T extends StoreBase<T>>(
     InjectedStoreClass: Constructor<T>,
     arg: Payload<T> | undefined,
     liseners: Lisener[],
-    compType: 'decorator' | 'hooks',
-    identification?: string | number
+    compType: CompType
   ) {
-    const instance = this.get(InjectedStoreClass, arg, liseners, identification)
+    const instance = this.get(InjectedStoreClass, arg, liseners)
 
-    const instanceLiseners: any[] = instance[_meta].liseners || []
+    const instanceLiseners: Lisener[] = instance[_meta].liseners || []
 
     liseners.forEach(item => {
-      if (!instanceLiseners.find((it: any) => it.comp === item.comp)) {
-        if (compType === 'hooks') {
+      if (!instanceLiseners.find(it => it.self === item.self)) {
+        if (compType === CompType.FUNCTION) {
           instance[_meta].liseners = [...liseners, ...instanceLiseners]
         } else {
           instance[_meta].liseners = [...instanceLiseners, ...liseners]
@@ -51,59 +47,36 @@ class Injector {
       instance[_meta].liseners = instance[_meta].liseners.filter(
         (item: any) => !liseners.find(it => it.forceUpdate === item.forceUpdate)
       )
-      if (!instance[_meta].liseners.length) {
-        const key = instance[_meta].key
-        this.sessContainer.get(key)?.componentWillUnmount?.()
-        this.sessContainer.delete(key)
-      }
     }
   }
 
   get<T extends StoreBase<T>>(
     InjectedStoreClass: Constructor<T>,
     args: Payload<T> = {},
-    liseners: Lisener[],
-    identification?: string | number
+    liseners: Lisener[]
   ): T {
-    const { scope, options: options1, ignoredProps = [] } = (InjectedStoreClass as any)[
-      _meta
-    ] as Meta
+    const { options: options1, ignoredProps = [] } = (InjectedStoreClass as any)[_meta] as Meta
 
     const options = mergeOptions(options1, globalOptions)
 
     let instance: T
 
-    let container = scope === 'session' ? this.sessContainer : this.appContainer
+    let container = this.appContainer
 
-    const { key: classKey, className, keyPrefix, classHaseCode } = genClassKey(
-      InjectedStoreClass,
-      String(identification || '')
-    )
-
-    const key = classKey
+    const { key, className } = genClassKey(InjectedStoreClass)
 
     instance = container.get(key)
 
     if (!instance) {
-      // clser session
-      if (scope === 'session') {
-        ;[...(this.sessContainer.keys() as any)].forEach(key => {
-          if (new RegExp(`^${keyPrefix}@${className}@${classHaseCode}@.*$`).test(key)) {
-            this.sessContainer.get(key)?.componentWillUnmount?.()
-
-            this.sessContainer.delete(key)
-          }
-        })
-      }
-
       instance = new InjectedStoreClass(args)
+      const initialValues = getInitialValues(instance)
 
       instance[_meta] = {
         ...instance[_meta],
         options,
-        scope,
         key,
-        storeName: className
+        storeName: className,
+        initialValues
       }
 
       let params: KVProps<T>

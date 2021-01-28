@@ -1,25 +1,14 @@
-import {
-  hashCode,
-  getUrlRelativePath,
-  getClassName,
-  genClassKey,
-  mergeOptions,
-  collectDependences
-} from '../utils'
+import { hashCode, getClassName, genClassKey, mergeOptions, collectDependences } from '../utils'
 
 import { StoreBase } from '../..'
 import { Options, GlobalOptions } from '../../types/store'
 import persist from '../../middleware/persist'
+import { CompType, Lisener, Role } from '../../types/StoreBase'
 
 describe('Injector utils', () => {
   class A extends StoreBase<A> {}
   class B extends StoreBase<A> {}
   const A1 = A
-
-  test('function getUrlRelativePath should get relative path', () => {
-    const path = getUrlRelativePath()
-    expect(path).toBe(`/`)
-  })
 
   test('function hashCode should generate a unique hash code', () => {
     const a = hashCode(A.toString())
@@ -82,13 +71,15 @@ describe('Injector utils', () => {
 
     const watchedProps = new Set<string>()
 
-    const liseners = [
+    const liseners: Lisener[] = [
       {
         forceUpdate: () => {
           return
         },
-        comp: {},
-        watchedProps
+        self: {},
+        watchedProps,
+        compType: CompType.FUNCTION,
+        role: Role.COMPONENT
       }
     ]
 

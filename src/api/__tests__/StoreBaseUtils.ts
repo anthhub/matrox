@@ -8,7 +8,7 @@ import {
 } from '../StoreBaseUtils'
 import { StoreBase } from '../..'
 import { _meta } from '../StoreBase'
-import { Lisener } from '../../types/StoreBase'
+import { CompType, Lisener, Role } from '../../types/StoreBase'
 import store from '../store'
 
 describe('StoreBaseUtils', () => {
@@ -17,13 +17,37 @@ describe('StoreBaseUtils', () => {
     const mockForceUpdate2 = () => undefined
     const mockForceUpdate3 = () => undefined
 
-    const comp = {}
-    const comp1 = {}
+    const self = {}
+    const self1 = {}
 
-    const lisener1 = { forceUpdate: mockForceUpdate1, comp, watchedProps: new Set<string>() }
-    const lisener2 = { forceUpdate: mockForceUpdate2, comp, watchedProps: new Set<string>() }
-    const lisener3 = { forceUpdate: mockForceUpdate3, comp: comp1, watchedProps: new Set<string>() }
-    const lisener4 = { forceUpdate: undefined, comp: comp1, watchedProps: new Set<string>() } as any
+    const lisener1: Lisener = {
+      forceUpdate: mockForceUpdate1,
+      self,
+      watchedProps: new Set<string>(),
+      compType: CompType.FUNCTION,
+      role: Role.COMPONENT
+    }
+    const lisener2: Lisener = {
+      forceUpdate: mockForceUpdate2,
+      self,
+      watchedProps: new Set<string>(),
+      compType: CompType.FUNCTION,
+      role: Role.COMPONENT
+    }
+    const lisener3: Lisener = {
+      forceUpdate: mockForceUpdate3,
+      self: self1,
+      watchedProps: new Set<string>(),
+      compType: CompType.FUNCTION,
+      role: Role.COMPONENT
+    }
+    const lisener4: Lisener = {
+      forceUpdate: undefined,
+      self: self1,
+      watchedProps: new Set<string>(),
+      compType: CompType.FUNCTION,
+      role: Role.COMPONENT
+    } as any
 
     const allLiseners = [lisener1, lisener2, lisener3, lisener4]
     const liseners1 = [lisener1, lisener2]
@@ -39,25 +63,6 @@ describe('StoreBaseUtils', () => {
     expect(reduceLisners(liseners2, effectLisners)).toStrictEqual(effectLisners)
     expect(reduceLisners(liseners3, effectLisners)).toStrictEqual(effectLisners)
     expect(reduceLisners(allLiseners, effectLisners)).toStrictEqual(effectLisners)
-
-    // 多层的情况
-    @store('session')
-    class B extends StoreBase<B> {
-      age = 1
-    }
-
-    const b = new B()
-    b[_meta].liseners = liseners2
-
-    const lisener5: Lisener = {
-      forceUpdate: () => undefined,
-      comp: new B(),
-      watchedProps: new Set<string>(),
-      role: 'store'
-    }
-
-    expect(reduceLisners([lisener5, ...liseners2], liseners2)).toStrictEqual(liseners2)
-    expect(reduceLisners([lisener5, ...allLiseners], liseners2)).toStrictEqual(liseners2)
   })
 
   test('function batchingUpdate should merge multiple calling for batching update', done => {
@@ -65,9 +70,27 @@ describe('StoreBaseUtils', () => {
     const mockForceUpdate2 = jest.fn(() => undefined)
     const mockForceUpdate3 = jest.fn(() => undefined)
 
-    const lisener1 = { forceUpdate: mockForceUpdate1, comp: {}, watchedProps: new Set<string>() }
-    const lisener2 = { forceUpdate: mockForceUpdate2, comp: {}, watchedProps: new Set<string>() }
-    const lisener3 = { forceUpdate: mockForceUpdate3, comp: {}, watchedProps: new Set<string>() }
+    const lisener1: Lisener = {
+      forceUpdate: mockForceUpdate1,
+      self: {},
+      watchedProps: new Set<string>(),
+      compType: CompType.FUNCTION,
+      role: Role.COMPONENT
+    }
+    const lisener2: Lisener = {
+      forceUpdate: mockForceUpdate2,
+      self: {},
+      watchedProps: new Set<string>(),
+      compType: CompType.FUNCTION,
+      role: Role.COMPONENT
+    }
+    const lisener3: Lisener = {
+      forceUpdate: mockForceUpdate3,
+      self: {},
+      watchedProps: new Set<string>(),
+      compType: CompType.FUNCTION,
+      role: Role.COMPONENT
+    }
 
     const liseners1 = [lisener1, lisener2]
     const liseners2 = [lisener2, lisener3]
@@ -102,10 +125,28 @@ describe('StoreBaseUtils', () => {
   })
 
   test('function getEffectiveLiseners should filter effective liseners', () => {
-    const liseners = [
-      { forceUpdate: () => undefined, comp: {}, watchedProps: new Set<string>() },
-      { forceUpdate: () => undefined, comp: {}, watchedProps: new Set<string>('a') },
-      { forceUpdate: () => undefined, comp: {}, watchedProps: new Set<string>('b') }
+    const liseners: Lisener[] = [
+      {
+        forceUpdate: () => undefined,
+        self: {},
+        watchedProps: new Set<string>(),
+        compType: CompType.FUNCTION,
+        role: Role.COMPONENT
+      },
+      {
+        forceUpdate: () => undefined,
+        self: {},
+        watchedProps: new Set<string>('a'),
+        compType: CompType.FUNCTION,
+        role: Role.COMPONENT
+      },
+      {
+        forceUpdate: () => undefined,
+        self: {},
+        watchedProps: new Set<string>('b'),
+        compType: CompType.FUNCTION,
+        role: Role.COMPONENT
+      }
     ]
     const effectiveLiseners = getEffectiveLiseners(liseners, { a: 1 })
     expect(effectiveLiseners).toEqual([liseners[1]])

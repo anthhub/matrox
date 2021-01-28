@@ -4,7 +4,6 @@ import { _meta } from '../StoreBase'
 
 describe('createStore', () => {
   test(`function createStore should generate 'useStore, injectStore, getStore, preloadStore, getState'`, () => {
-    @store('application')
     class A extends StoreBase<A> {}
 
     const { useStore, injectStore, getStore, preloadStore, getState } = createStore(A)

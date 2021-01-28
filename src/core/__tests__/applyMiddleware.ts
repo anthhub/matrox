@@ -3,11 +3,9 @@ import StoreBase from '../../api/StoreBase'
 
 import { StoreAPI, Dispatch } from '../../types/middleware'
 import { Action } from '../../types/StoreBase'
-import store from '../../api/store'
 
 describe('applyMiddleware', () => {
   test(`function applyMiddleware should excute all middleware when excute 'setProps'`, async () => {
-    @store('application')
     class A extends StoreBase<A> {
       age = 0
     }

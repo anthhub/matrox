@@ -1,7 +1,5 @@
 import { MiddleWare } from './middleware'
 
-export type Scope = 'application' | 'session'
-
 export type Constructor<T> = new (...args: any[]) => T
 
 export type PlainObject = {
@@ -9,7 +7,6 @@ export type PlainObject = {
 }
 
 export type GlobalOptions = {
-  isSessionStore?: boolean
   middlewares?: MiddleWare[]
   persist?: boolean
 }
@@ -18,4 +15,4 @@ export type StoreOptions = {
   ignoreMiddlewares?: MiddleWare[]
 } & GlobalOptions
 
-export type Options<T = any> = StoreOptions
+export type Options = StoreOptions

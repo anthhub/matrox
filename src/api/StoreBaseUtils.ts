@@ -1,7 +1,8 @@
-import { Lisener, KVProps } from '../types/StoreBase'
+import { Lisener, KVProps, Role } from '../types/StoreBase'
 
 import { PlainObject } from '../types/store'
 import { _meta } from './StoreBase'
+import { logError } from '../core/utils'
 
 let allLiseners: Lisener[] = []
 let isBatchingUpdate = false
@@ -10,15 +11,20 @@ export const reduceLisners = (liseners: Lisener[], reducedLiseners: Lisener[]) =
   const tmpLisener = [...reducedLiseners]
 
   liseners
-    .map(item => (item.role === 'store' ? item.comp[_meta]?.liseners || [] : item))
+    .map(item => (item.role === Role.STORE ? item.self[_meta]?.liseners || [] : item))
     .flat(1)
-    .forEach(item => {
-      if (!tmpLisener.find(it => it.comp === item.comp) && item.forceUpdate) {
+    .forEach((item: Lisener) => {
+      if (!tmpLisener.find(it => it.self === item.self) && item.forceUpdate) {
         tmpLisener.push(item)
       }
     })
 
   return tmpLisener
+}
+
+export const directUpdate = (liseners: Lisener[]) => {
+  allLiseners = reduceLisners(liseners, allLiseners)
+  walkUpdate()
 }
 
 export const batchingUpdate = async (liseners: Lisener[]) => {
@@ -32,6 +38,10 @@ export const batchingUpdate = async (liseners: Lisener[]) => {
     return
   }
   isBatchingUpdate = false
+  walkUpdate()
+}
+
+function walkUpdate() {
   allLiseners.forEach(item => item?.forceUpdate?.())
   allLiseners = []
 }
@@ -54,23 +64,15 @@ export const reduceUpdateObject = <T extends PlainObject, U extends PlainObject>
 ): U => {
   return Object.keys(updateObject).reduce((res: any, key) => {
     if (target[key] === undefined) {
-      if (process.env.NODE_ENV === 'production') {
-        return
-      } else {
-        throw Error(`target don't exist the '${key}', please define it before using`)
-      }
+      logError(`Matrox: Target don't exist the '${key}', please define it before using.`)
+      return
     }
 
     if (typeof updateObject[key] !== typeof target[key]) {
-      if (process.env.NODE_ENV === 'production') {
-        return
-      } else {
-        throw Error(
-          `${updateObject[key]} can't assign to ${key} since the type of ${key} is ${typeof target[
-            key
-          ]} instead of ${typeof updateObject[key]}`
-        )
-      }
+      logError(
+        `Matrox: expected ${typeof target[key]} but ${typeof updateObject[key]} in field ${key}.`
+      )
+      return
     }
 
     if (updateObject[key] !== target[key]) {
@@ -82,16 +84,14 @@ export const reduceUpdateObject = <T extends PlainObject, U extends PlainObject>
 
 export const updateTarget = <T extends PlainObject>(target: T, updateObject: KVProps<T>) => {
   Object.keys(updateObject).forEach(key => {
-    const value = (updateObject as any)[key]
     if (!key) {
       throw new Error('Unuseful object!')
     }
+    const value = (updateObject as any)[key]
+
     if (typeof value === 'function') {
-      if (process.env.NODE_ENV === 'production') {
-        return
-      } else {
-        throw new Error('Forbid reseting method member of class!')
-      }
+      logError(`Matrox: Forbid reset method of class.`)
+      return
     }
 
     Reflect.set(target, key, value)
@@ -99,14 +99,14 @@ export const updateTarget = <T extends PlainObject>(target: T, updateObject: KVP
 }
 
 export const compateAction = (payload: any, type?: string) => {
-  // 函数的情况 可能是action 和 payload
+  // payload is "action" or "payload"
   if (typeof payload === 'function') {
     return { payload, type }
   }
-  // 一定是action
+  // payload is "action"
   if (payload.type !== undefined && payload.payload !== undefined) {
     return payload
   }
-  // payload 的情况
+  // payload is "payload"
   return { payload, type }
 }

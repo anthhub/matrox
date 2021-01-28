@@ -6,15 +6,12 @@ import { genClassKey } from '../../core/utils'
 import { JSDOM } from 'jsdom'
 import { promises } from 'dns'
 import store from '../store'
+import { CompType, Lisener, Role } from '../../types/StoreBase'
 
 describe('StoreBase', () => {
-  const dom = new JSDOM()
-  const document = { location: { toString: () => `https://www.npmjs.com/package/matrox` } }
-  ;(global as any).document = { ...dom.window.document, ...document }
-
   const options1: Options = { middlewares: [] }
 
-  @store('application', options1)
+  @store(options1)
   class A extends StoreBase<A> {
     name = '1'
     age = 0
@@ -27,22 +24,28 @@ describe('StoreBase', () => {
   const mockForceUpdate2 = jest.fn(() => undefined)
   const mockForceUpdate3 = jest.fn(() => undefined)
 
-  const lisener1 = {
+  const lisener1: Lisener = {
     forceUpdate: mockForceUpdate1,
-    comp: {},
-    watchedProps: new Set<string>(['name'])
+    self: {},
+    watchedProps: new Set<string>(['name']),
+    compType: CompType.FUNCTION,
+    role: Role.COMPONENT
   }
 
-  const lisener2 = {
+  const lisener2: Lisener = {
     forceUpdate: mockForceUpdate2,
-    comp: {},
-    watchedProps: new Set<string>(['age'])
+    self: {},
+    watchedProps: new Set<string>(['age']),
+    compType: CompType.FUNCTION,
+    role: Role.COMPONENT
   }
 
-  const lisener3 = {
+  const lisener3: Lisener = {
     forceUpdate: mockForceUpdate3,
-    comp: {},
-    watchedProps: new Set<string>(['money'])
+    self: {},
+    watchedProps: new Set<string>(['money']),
+    compType: CompType.FUNCTION,
+    role: Role.COMPONENT
   }
 
   const liseners = [lisener1, lisener2, lisener3]
@@ -50,9 +53,13 @@ describe('StoreBase', () => {
 
   test('_updatePropsWithoutRender method should update class without render', async () => {
     expect((storeA as any)[_meta]).toEqual({
+      initialValues: {
+        age: 0,
+        money: 0,
+        name: '1'
+      },
       liseners: liseners,
       options: options1,
-      scope: 'application',
       key: genClassKey(A).key,
       storeName: 'A',
       ignoredProps: []
@@ -99,6 +106,10 @@ describe('StoreBase', () => {
   })
 
   test('forceUpdate method should batching update class and batching render liseners', async () => {
+    expect(mockForceUpdate1.mock.calls.length).toBe(0)
+    expect(mockForceUpdate2.mock.calls.length).toBe(3)
+    expect(mockForceUpdate3.mock.calls.length).toBe(0)
+
     await storeA.forceUpdate()
 
     expect(mockForceUpdate1.mock.calls.length).toBe(1)

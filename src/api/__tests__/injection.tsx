@@ -2,7 +2,7 @@ import injection from '../injection'
 
 import * as React from 'react'
 import '@testing-library/jest-dom'
-import { render, act, fireEvent } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import { StoreBase } from '../..'
 import { getInjector } from '../../core/Injector'
 import ignore from '../ignore'
@@ -13,7 +13,7 @@ describe('injection', () => {
   const injector = getInjector()
   const injectorAny: any = injector
 
-  @store('application')
+  @store()
   class G extends StoreBase<G> {
     title = '='
 
@@ -22,7 +22,7 @@ describe('injection', () => {
     }
   }
 
-  @store('application')
+  @store()
   class A extends StoreBase<A> {
     @injection(G)
     g!: Readonly<G>
@@ -45,11 +45,6 @@ describe('injection', () => {
     }
   }
 
-  @store('session')
-  class B extends StoreBase<B> {
-    age = 0
-  }
-
   let param = 10
   let param1 = 100
 
@@ -60,19 +55,15 @@ describe('injection', () => {
     @injection(A, { name: param + '' })
     a!: Readonly<A>
 
-    @injection(B, { age: param })
-    b!: Readonly<B>
-
     render() {
       count++
       param++
       const { name } = this.a
-      const { age } = this.b
+
       return (
         <div>
           <div>Comp {count} times</div>
           <div>Comp I'm {name} </div>
-          <div>Comp {age} years old</div>
           <div>Comp {this.a.title}</div>
 
           <button onClick={this.a.changeName}>changeName</button>
@@ -87,19 +78,15 @@ describe('injection', () => {
     @injection(A, (param1 => () => ({ name: param1 + '' }))(param1))
     a!: Readonly<A>
 
-    @injection(B, (param1 => () => ({ age: param1 }))(param1))
-    b!: Readonly<B>
-
     render() {
       count1++
       param1++
       const { name } = this.a
-      const { age } = this.b
+
       return (
         <div>
           <div>Comp1 {count1} times</div>
           <div>Comp1 I'm {name} </div>
-          <div>Comp1 {age} years old</div>
         </div>
       )
     }
@@ -119,25 +106,24 @@ describe('injection', () => {
     const warpper = render(<Comp />)
     expect(param).toBe(11)
     expect(warpper.getByText(`Comp I'm 10`)).toBeInTheDocument()
-    expect(warpper.getByText('Comp 10 years old')).toBeInTheDocument()
+
     warpper.rerender(<Comp />)
     expect(param).toBe(12)
     expect(warpper.getByText(`Comp I'm 10`)).toBeInTheDocument()
-    expect(warpper.getByText('Comp 10 years old')).toBeInTheDocument()
+
     warpper.unmount()
 
     const warpper1 = render(<Comp1 />)
     expect(param1).toBe(101)
     expect(warpper1.getByText(`Comp1 I'm 10`)).toBeInTheDocument()
-    expect(warpper1.getByText('Comp1 100 years old')).toBeInTheDocument()
+
     warpper1.rerender(<Comp1 />)
     expect(param1).toBe(102)
     expect(warpper1.getByText(`Comp1 I'm 10`)).toBeInTheDocument()
-    expect(warpper1.getByText('Comp1 100 years old')).toBeInTheDocument()
+
     warpper1.unmount()
 
     expect(injectorAny.appContainer.size).toBe(2)
-    expect(injectorAny.sessContainer.size).toBe(0)
   })
 
   test(`component using hooks 'useInjection' should render accurately`, async () => {
@@ -147,9 +133,8 @@ describe('injection', () => {
     expect(count).toBe(1)
     expect(count1).toBe(1)
     expect(warpper.getByText(`Comp I'm 10`)).toBeInTheDocument()
-    expect(warpper.getByText('Comp 10 years old')).toBeInTheDocument()
+
     expect(warpper1.getByText(`Comp1 I'm 10`)).toBeInTheDocument()
-    expect(warpper1.getByText('Comp1 10 years old')).toBeInTheDocument()
 
     // 异步渲染
     fireEvent.click(warpper.getByText(/^changeName$/))
@@ -234,6 +219,5 @@ describe('injection', () => {
     warpper1.unmount()
 
     expect(injectorAny.appContainer.size).toBe(2)
-    expect(injectorAny.sessContainer.size).toBe(0)
   })
 })

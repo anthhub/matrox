@@ -1,20 +1,7 @@
 import StoreBase, { _meta } from '../api/StoreBase'
 import persist from '../middleware/persist'
-import { Constructor, Scope, Options, GlobalOptions } from '../types/store'
+import { Constructor, Options, GlobalOptions, PlainObject } from '../types/store'
 import { Lisener } from '../types/StoreBase'
-
-export const getUrlRelativePath = () => {
-  const url = document.location.toString()
-  const arrUrl = url.split('//')
-
-  const start = arrUrl[1].indexOf('/')
-  let relUrl = arrUrl[1].substring(start)
-
-  if (relUrl.indexOf('?') !== -1) {
-    relUrl = relUrl.split('?')[0]
-  }
-  return relUrl
-}
 
 export const hashCode = (str: string) => {
   return str.split('').reduce(function(a, b) {
@@ -33,25 +20,16 @@ export const getClassName = (clazz: Constructor<any>) => {
   return name1 || name2 || ''
 }
 
-export const genClassKey = <T extends StoreBase<T>>(
-  InjectedStoreClass: Constructor<T>,
-  identification?: string
-) => {
-  const keyPrefix = hashCode('mobx-injection')
-
-  const scope: Scope = (InjectedStoreClass as any)[_meta]?.scope
-
-  const curPath = identification || getUrlRelativePath()
+export const genClassKey = <T extends StoreBase<T>>(InjectedStoreClass: Constructor<T>) => {
+  const keyPrefix = hashCode('MATROX')
 
   const className = getClassName(InjectedStoreClass)
 
-  const keyPostfix = scope === 'session' ? curPath : ''
-
   const classHaseCode = hashCode(InjectedStoreClass.toString().slice(0, 100))
 
-  const key = `${keyPrefix}@${className}@${classHaseCode}@${keyPostfix}`
+  const key = `${keyPrefix}@${className}@${classHaseCode}`
 
-  return { key, className, classHaseCode, keyPostfix, keyPrefix }
+  return { key, className, classHaseCode, keyPrefix }
 }
 
 export const mergeOptions = (options: Options, globalOptions: GlobalOptions) => {
@@ -80,9 +58,8 @@ export const collectDependences = <T extends StoreBase<T>>(
   ignoredProps: string[] = []
 ): T => {
   return new Proxy(instance, {
-    get(target, key: string | symbol) {
-      const result = (target as any)[key]
-
+    get(target: any, key: string | symbol) {
+      const result = target[key]
       if (typeof key !== 'symbol' && typeof result !== 'function' && !ignoredProps.includes(key)) {
         liseners.forEach(item => {
           item.watchedProps.add(key)
@@ -95,7 +72,32 @@ export const collectDependences = <T extends StoreBase<T>>(
       if (typeof key === 'symbol') {
         return Reflect.set(target, key, value)
       }
-      throw Error('store property to be readonly!')
+      logError('Matrox: store property is readonly.')
+      return false
     }
   })
+}
+
+export const getInitialValues = <T extends PlainObject>(target: T): T => {
+  return Object.keys(target).reduce((res: any, key) => {
+    const result = target[key]
+
+    if (result == undefined) {
+      logError(`Matrox: please define "${key}" before using.`)
+      return
+    }
+
+    if (typeof key !== 'symbol' && typeof result !== 'function') {
+      res[key] = result
+    }
+    return res
+  }, {})
+}
+
+export const logError = (msg: string) => {
+  if (process.env.NODE_ENV === 'production') {
+    console.error(msg)
+  } else {
+    throw Error(msg)
+  }
 }

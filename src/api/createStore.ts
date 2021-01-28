@@ -3,7 +3,7 @@ import StoreBase from './StoreBase'
 import useInjection from './useInjection'
 import injection from './injection'
 import { Payload } from '../types/StoreBase'
-import { Constructor, Scope, StoreOptions } from '../types/store'
+import { Constructor, StoreOptions } from '../types/store'
 import store from './store'
 
 /**
@@ -24,10 +24,7 @@ const createStore = <T extends StoreBase<T>, U extends Payload<T>>(
   InjectedStoreClass: Constructor<T>,
   options: StoreOptions = {}
 ) => {
-  InjectedStoreClass = store(
-    (options.isSessionStore ? 'seesion' : 'application') as Scope,
-    options
-  )(InjectedStoreClass)
+  InjectedStoreClass = store(options)(InjectedStoreClass)
 
   /**
    * get a store for function component

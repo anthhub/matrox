@@ -3,7 +3,8 @@ import {
   reduceUpdateObject,
   getEffectiveLiseners,
   updateTarget,
-  compateAction
+  compateAction,
+  directUpdate
 } from './StoreBaseUtils'
 import { Action, Meta, ActionFn, Payload, KVProps } from '../types/StoreBase'
 
@@ -35,10 +36,10 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
   private [_meta]: Meta = {
     liseners: [],
     options: {},
-    scope: 'application',
     key: '',
     storeName: '',
-    ignoredProps: []
+    ignoredProps: [],
+    initialValues: {}
   }
 
   private [_dispatchAction] = async (
@@ -116,6 +117,34 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
    */
   forceUpdate = () => {
     return batchingUpdate(this[_meta].liseners)
+  }
+  /**
+   *  directly force render all components or stores using this store
+   *
+   * @example
+   * ```ts
+   * store.forceUpdate()
+   * ```
+   *
+   * @see https://github.com/anthhub/matrox#directForceUpdate
+   */
+  directForceUpdate = () => {
+    return directUpdate(this[_meta].liseners)
+  }
+  /**
+   * reset store properties and then render all components or stores using this store
+   *
+   * @example
+   * ```ts
+   * store.resetStore()
+   * ```
+   *
+   * @see https://github.com/anthhub/matrox#resetStore
+   */
+  resetStore = () => {
+    const initialValues: any = this[_meta].initialValues
+    this[_updatePropsWithoutRender](initialValues)
+    return directUpdate(this[_meta].liseners)
   }
   /**
    * merge action and batching update store or component using this store

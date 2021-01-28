@@ -6,7 +6,7 @@ const applyMiddleware = (...middlewares: MiddleWare[]) => {
   return <T extends StoreBase<any>>(store: T) => {
     let dispatch: any = () => {
       throw new Error(
-        `Dispatching while constructing your middleware is not allowed. Other middleware would not be applied to this dispatch.`
+        `Matrox: dispatching while constructing your middleware is not allowed. Other middleware would not be applied to this dispatch.`
       )
     }
 

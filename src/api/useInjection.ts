@@ -4,7 +4,7 @@ import { getInjector } from '../core/Injector'
 
 import StoreBase from './StoreBase'
 import { Constructor } from '../types/store'
-import { Payload, Lisener } from '../types/StoreBase'
+import { Payload, Lisener, Role, CompType } from '../types/StoreBase'
 import useThis from '../hooks/useThis'
 import useForceUpdate from '../hooks/useForceUpdate'
 
@@ -12,23 +12,27 @@ const injector = getInjector()
 
 const useInjection = <T extends StoreBase<T>>(
   InjectedStoreClass: Constructor<T>,
-  args?: Payload<T>,
-  identification?: number | string
+  args?: Payload<T>
 ): Readonly<T> => {
-  const comp = useThis(args)
+  const self = useThis(args)
   const forceUpdate = useForceUpdate()
-
+  const compType = CompType.FUNCTION
   const liseners: Lisener[] = useMemo(
-    () => [{ forceUpdate, comp, watchedProps: new Set<string>(), role: 'comp' }],
+    () => [
+      {
+        forceUpdate,
+        self,
+        watchedProps: new Set<string>(),
+        role: Role.COMPONENT,
+        compType
+      }
+    ],
     []
   )
 
-  useEffect(
-    () => injector.subscribe(InjectedStoreClass, args, liseners, `hooks`, identification),
-    []
-  )
+  useEffect(() => injector.subscribe(InjectedStoreClass, args, liseners, compType), [])
 
-  return injector.get(InjectedStoreClass, args, liseners, identification)
+  return injector.get(InjectedStoreClass, args, liseners)
 }
 
 export default useInjection

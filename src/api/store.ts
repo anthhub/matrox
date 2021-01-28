@@ -1,10 +1,9 @@
 import 'reflect-metadata'
 import StoreBase, { _meta } from './StoreBase'
-import { Options, Scope, Constructor } from '../types/store'
+import { Options, Constructor } from '../types/store'
 /**
  * config store
  *
- * @param  {S} scope store life scope
  * @param  {Options<S>} options? store options
  *
  * @example
@@ -18,9 +17,7 @@ import { Options, Scope, Constructor } from '../types/store'
  *
  * @see https://github.com/anthhub/matrox#store
  */
-const store = <S extends Scope>(scope: S, options?: Options<S>) => <T extends StoreBase<T>>(
-  target: Constructor<T>
-) => {
+const store = (options?: Options) => <T extends StoreBase<T>>(target: Constructor<T>) => {
   const ignoredProps: string[] = []
 
   for (let key in target.prototype) {
@@ -31,7 +28,7 @@ const store = <S extends Scope>(scope: S, options?: Options<S>) => <T extends St
     }
   }
 
-  ;(target as any)[_meta] = { scope, options, ignoredProps }
+  ;(target as any)[_meta] = { options, ignoredProps }
 
   return target
 }

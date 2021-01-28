@@ -1,4 +1,4 @@
-import { Options, Scope } from './store'
+import { Options, PlainObject } from './store'
 
 export type OmitNever<T> = Pick<T, { [P in keyof T]: T[P] extends never ? never : P }[keyof T]>
 
@@ -19,18 +19,29 @@ export type PropsAction<K extends keyof T, T> = {
   payload: KVProps<T>
 }
 
+export enum Role {
+  STORE = 'STORE',
+  COMPONENT = 'COMPONENT'
+}
+
+export enum CompType {
+  FUNCTION = 'FUNCTION',
+  CLASS = 'CLASS'
+}
+
 export type Lisener = {
   forceUpdate: Function
-  comp: any
+  self: any
   watchedProps: Set<string>
-  role?: 'store' | 'comp'
+  compType: CompType
+  role: Role
 }
 
 export type Meta = {
   liseners: Lisener[]
   options: Options
-  scope: Scope
   key: string
   storeName: string
   ignoredProps: string[]
+  initialValues: PlainObject
 }
