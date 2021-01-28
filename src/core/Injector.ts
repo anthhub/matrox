@@ -1,4 +1,4 @@
-import { mergeOptions, collectDependences, genClassKey, getInitialValues } from './utils'
+import { mergeOptions, collectDependences, genClassKey, getProperties } from './utils'
 import StoreBase, { _meta, _updatePropsWithoutRender } from '../api/StoreBase'
 
 import { Constructor } from '../types/store'
@@ -69,7 +69,7 @@ class Injector {
 
     if (!instance) {
       instance = new InjectedStoreClass(args)
-      const initialValues = getInitialValues(instance)
+      const initialValues = getProperties(instance)
 
       instance[_meta] = {
         ...instance[_meta],

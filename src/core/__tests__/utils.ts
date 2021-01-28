@@ -1,4 +1,12 @@
-import { hashCode, getClassName, genClassKey, mergeOptions, collectDependences } from '../utils'
+import {
+  hashCode,
+  getClassName,
+  genClassKey,
+  mergeOptions,
+  collectDependences,
+  getProperties,
+  logError
+} from '../utils'
 
 import { StoreBase } from '../..'
 import { Options, GlobalOptions } from '../../types/store'
@@ -113,5 +121,22 @@ describe('Injector utils', () => {
     expect(() => (proxyInstance.name = 'stupid')).toThrow()
 
     expect(() => (proxyInstance.eat = () => undefined)).toThrow()
+  })
+
+  test('function getProperties should get properties of an object', () => {
+    const rs = getProperties({ a: () => undefined, b: '1', [Symbol('c')]: 'c' })
+    expect(rs).toEqual({ b: '1' })
+  })
+
+  test('function logError should log error message in production environment instead of throw error', () => {
+    const backup = process.env.NODE_ENV
+
+    process.env.NODE_ENV = 'development'
+    expect(() => logError('test')).toThrow()
+
+    process.env.NODE_ENV = 'production'
+    expect(() => logError('test')).not.toThrow()
+
+    process.env.NODE_ENV = backup
   })
 })

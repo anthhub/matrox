@@ -1,10 +1,9 @@
 import { Options } from '../../types/store'
-import { StoreBase, ignore } from '../..'
+import { StoreBase } from '../..'
 import { _meta, _updatePropsWithoutRender } from '../StoreBase'
 import getInjection from '../getInjection'
 import { genClassKey } from '../../core/utils'
-import { JSDOM } from 'jsdom'
-import { promises } from 'dns'
+
 import store from '../store'
 import { CompType, Lisener, Role } from '../../types/StoreBase'
 
@@ -126,5 +125,40 @@ describe('StoreBase', () => {
     expect(mockForceUpdate1.mock.calls.length).toBe(2)
     expect(mockForceUpdate2.mock.calls.length).toBe(5)
     expect(mockForceUpdate3.mock.calls.length).toBe(2)
+  })
+
+  test('forceUpdateSync method should update class and render liseners directly', async () => {
+    expect(mockForceUpdate1.mock.calls.length).toBe(2)
+    expect(mockForceUpdate2.mock.calls.length).toBe(5)
+    expect(mockForceUpdate3.mock.calls.length).toBe(2)
+
+    await storeA.forceUpdateSync()
+
+    expect(mockForceUpdate1.mock.calls.length).toBe(3)
+    expect(mockForceUpdate2.mock.calls.length).toBe(6)
+    expect(mockForceUpdate3.mock.calls.length).toBe(3)
+
+    // 批量更新
+    storeA.forceUpdateSync()
+    storeA.forceUpdateSync()
+    storeA.forceUpdateSync()
+
+    await Promise.resolve()
+
+    expect(mockForceUpdate1.mock.calls.length).toBe(6)
+    expect(mockForceUpdate2.mock.calls.length).toBe(9)
+    expect(mockForceUpdate3.mock.calls.length).toBe(6)
+  })
+
+  test('resetStore method should reset properties of store', async () => {
+    await storeA.setProps({ age: 99, money: 99, name: '99' })
+    expect(storeA.age).toBe(99)
+    expect(storeA.money).toBe(99)
+    expect(storeA.name).toBe('99')
+
+    storeA.resetStore()
+    expect(storeA.age).toBe(0)
+    expect(storeA.money).toBe(0)
+    expect(storeA.name).toBe('1')
   })
 })

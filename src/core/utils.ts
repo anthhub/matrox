@@ -78,7 +78,7 @@ export const collectDependences = <T extends StoreBase<T>>(
   })
 }
 
-export const getInitialValues = <T extends PlainObject>(target: T): T => {
+export const getProperties = <T extends PlainObject>(target: T): T => {
   return Object.keys(target).reduce((res: any, key) => {
     const result = target[key]
 

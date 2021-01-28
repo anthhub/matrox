@@ -126,9 +126,9 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
    * store.forceUpdate()
    * ```
    *
-   * @see https://github.com/anthhub/matrox#directForceUpdate
+   * @see https://github.com/anthhub/matrox#forceUpdateSync
    */
-  directForceUpdate = () => {
+  forceUpdateSync = () => {
     return directUpdate(this[_meta].liseners)
   }
   /**
