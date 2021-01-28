@@ -41,7 +41,7 @@ export const batchingUpdate = async (liseners: Lisener[]) => {
   walkUpdate()
 }
 
-function walkUpdate() {
+const walkUpdate = () => {
   allLiseners.forEach(item => item?.forceUpdate?.())
   allLiseners = []
 }

@@ -16,7 +16,7 @@
 
 ## 在线体验
 
-[![Edit](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/react-with-matrox-l0iih?file=/src/App.tsx)
+[![Edit](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/react-with-matrox-forked-w732m?file=/src/App.tsx)
 
 ## 安装
 
@@ -187,30 +187,9 @@ class CounterStore extends StoreBase<CounterStore> {
   count = 0
 }
 
-// getStore获取store实例, getState获取store序列化之后的plain object
+// getStore 获取 store 实例, getState 获取 store 序列化之后的 plain object
 const { getStore, getState } = createStore(CounterStore)
 ```
-
-### store 的生命周期
-
-`matrox` 有一个`与众不同的`的特点, 就是认为 store 有生命周期的区别:
-
-- 我们使用的 store 有的需要在全局持久存在与内存中, 这个 store 是需要各个模块都依赖的, 比如说用户信息 userInfo, 而且全局只有一份;
-- 但是有的 store 只是为了解决多层嵌套组件的数据传递问题, 其他的模块或者说页面不需要依赖于它, 当它被组件依赖的时候才去创建, 有时还需要组件传入初始化参数, 当组件销毁的时候, 这个 store 也就销毁了. 这样一来, 当组件再次挂载的时候, 不需要再提前清理上一次使用的留下的脏数据了, 相信使用过 `mobx`(`mobx` 一般是全局单例使用) 的同学比较有体会.
-
-那么我们应该如何定义它呢, 只需要在 `createStore` 第三个参数使用 options 参数的 `isSessionStore` 字段设置为 `true`就可以了.
-
-```tsx
-import { StoreBase, createStore } from 'matrox'
-
-class CounterStore extends StoreBase<CounterStore> {
-  count = 0
-}
-
-const { getStore, getState, injectStore } = createStore(CounterStore, { isSessionStore: true })
-```
-
-> `注意:` `getStore`, `getState` 以及 store 中的 被`@injectStore()` 对于 `isSessionStore` 为 `true` 的 store 将会失效, 因为这种 store 是与组件伴生的, 只能使用在组件中. `session store`是以浏览器路由作为标识(出去 `qurey` 和 `hash`, 即`?`前的相对路径 ), 当路由改变时, 之前的 store 将会被销毁, 而创建新的无污染的 store; 反之, 路由不变, 组件访问的就是同一个 store.
 
 ### 应用中间件
 
@@ -223,7 +202,7 @@ class CounterStore extends StoreBase<CounterStore> {
   count = 0
 }
 
-// matrox 自带了persist中间件(只对普通store持久化), 有兴趣可以参考源码
+// matrox 自带了 persist 中间件, 有兴趣可以参考源码
 const { getStore, getState, injectStore } = createStore(CounterStore, { middleware: [persist] })
 ```
 
@@ -238,7 +217,7 @@ class CounterStore extends StoreBase<CounterStore> {
   count = 0
 }
 
-// matrox 自带了persist中间件(只对普通store持久化), 有兴趣可以参考源码
+// matrox 自带了 persist 中间件, 有兴趣可以参考源码
 const { getStore, getState, injectStore } = createStore(CounterStore, {
   ignoreMiddleware: [persist]
 })
@@ -280,7 +259,7 @@ class CounterStore extends StoreBase<CounterStore> {
   count = 0
 }
 
-// getStore获取store实例, getState获取store序列化之后的plain object
+// getStore 获取 store 实例, getState 获取 store 序列化之后的 plain object
 const { getStore, getState } = createStore(CounterStore, { persist: true })
 ```
 
@@ -305,15 +284,12 @@ class CounterStore extends StoreBase<CounterStore> {
   }
 }
 
-// getStore获取store实例, getState获取store序列化之后的plain object
+// getStore 获取 store 实例, getState 获取 store 序列化之后的 plain object
 const { preloadStore } = createStore(CounterStore)
 
 // app.ts
 preloadStore()
 ```
-
-> `注意:` `preloadStore`也只能使用在普通 store 中.
-
 ### 依赖收集和性能优化
 
 - `matrox` 内部使用和 `mobx` 一样的 `Proxy` api 来进行依赖收集(只收集浅层数据,所以 store 内部数据无需`toJS`), 所以当你组件只订阅了其使用 store 属性的更新.
