@@ -132,7 +132,7 @@ describe('StoreBase', () => {
     expect(mockForceUpdate2.mock.calls.length).toBe(5)
     expect(mockForceUpdate3.mock.calls.length).toBe(2)
 
-    await storeA.forceUpdateSync()
+    storeA.forceUpdateSync()
 
     expect(mockForceUpdate1.mock.calls.length).toBe(3)
     expect(mockForceUpdate2.mock.calls.length).toBe(6)

@@ -82,11 +82,11 @@ export const getProperties = <T extends PlainObject>(target: T): T => {
   return Object.keys(target).reduce((res: any, key) => {
     const result = target[key]
 
-    if (result == undefined) {
+    if (result === undefined) {
       logError(`Matrox: please define "${key}" before using.`)
       return
     }
-
+    // tslint:disable-next-line: strict-type-predicates
     if (typeof key !== 'symbol' && typeof result !== 'function') {
       res[key] = result
     }
