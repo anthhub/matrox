@@ -12,7 +12,7 @@ describe('getInjection', () => {
     @store(options1)
     class A extends StoreBase<A> {}
 
-    const store1 = getInjection(A)
+    const store1 = getInjection(A, '')
 
     expect(store1).toBeDefined()
   })

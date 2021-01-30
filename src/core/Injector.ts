@@ -25,12 +25,11 @@ class Injector {
 
   subscribe<T extends StoreBase<T>>(
     InjectedStoreClass: Constructor<T>,
-    arg: Payload<T> | undefined,
     liseners: Lisener[],
     compType: CompType,
     identification: string | number = ''
   ) {
-    const instance = this.get(InjectedStoreClass, arg, liseners, identification)
+    const instance = this.get(InjectedStoreClass, liseners, identification)
 
     const instanceLiseners: Lisener[] = instance[_meta].liseners || []
 
@@ -53,7 +52,6 @@ class Injector {
 
   get<T extends StoreBase<T>>(
     InjectedStoreClass: Constructor<T>,
-    args: Payload<T> = {},
     liseners: Lisener[],
     identification: string | number = ''
   ): T {
@@ -70,7 +68,7 @@ class Injector {
     instance = container.get(key)
 
     if (!instance) {
-      instance = new InjectedStoreClass(args)
+      instance = new InjectedStoreClass()
       const initialValues = getProperties(instance)
 
       instance[_meta] = {
@@ -80,15 +78,6 @@ class Injector {
         storeName: className,
         initialValues
       }
-
-      let params: KVProps<T>
-      if (typeof args === 'function') {
-        params = args(instance)
-      } else {
-        params = args
-      }
-
-      instance[_updatePropsWithoutRender]({ ...params })
 
       if (options?.middlewares?.length) {
         applyMiddleware(...(options.middlewares || []))(instance)

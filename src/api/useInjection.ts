@@ -12,10 +12,9 @@ const injector = getInjector()
 
 const useInjection = <T extends StoreBase<T>>(
   InjectedStoreClass: Constructor<T>,
-  args?: Payload<T>,
-  identification: number | string = ''
+  identification: number | string
 ): Readonly<T> => {
-  const self = useThis(args)
+  const self = useThis()
   const forceUpdate = useForceUpdate()
   const compType = CompType.FUNCTION
   const liseners: Lisener[] = useMemo(
@@ -31,14 +30,11 @@ const useInjection = <T extends StoreBase<T>>(
     [identification]
   )
 
-  useEffect(
-    () => injector.subscribe(InjectedStoreClass, args, liseners, compType, identification),
-    [identification]
-  )
-
-  return useMemo(() => injector.get(InjectedStoreClass, args, liseners, identification), [
+  useEffect(() => injector.subscribe(InjectedStoreClass, liseners, compType, identification), [
     identification
   ])
+
+  return useMemo(() => injector.get(InjectedStoreClass, liseners, identification), [identification])
 }
 
 export default useInjection

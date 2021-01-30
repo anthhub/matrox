@@ -8,7 +8,6 @@ import { getInjector } from '../../core/Injector'
 import store from '../store'
 
 describe('useInjection', () => {
-
   @store()
   class A extends StoreBase<A> {
     name = '1'
@@ -25,10 +24,10 @@ describe('useInjection', () => {
     const arr = [A]
 
     arr.forEach((Clazz: any) => {
-      const hook = renderHook(() => useInjection(Clazz))
+      const hook = renderHook(() => useInjection(Clazz, ''))
       const a = hook.result.current
 
-      const hook1 = renderHook(() => useInjection(Clazz))
+      const hook1 = renderHook(() => useInjection(Clazz, ''))
       const a1 = hook1.result.current
 
       expect(a).toStrictEqual(a1)
@@ -44,32 +43,10 @@ describe('useInjection', () => {
     })
   })
 
-  test(`the args parameter of get method of Injector class should effect the instance at it's initiation firstly`, () => {
-    const hook = renderHook(() => useInjection(A, { name: '2' }))
-    const a = hook.result.current
-    expect(a.name).toBe('2')
-
-    const hook1 = renderHook(() => useInjection(A, { name: '3' }))
-    const a1 = hook1.result.current
-    expect(a1.name).toBe('2')
-
-    expect(injectorAny.appContainer.size).toBe(1)
-
-    hook.rerender()
-    hook1.rerender()
-
-    expect(injectorAny.appContainer.size).toBe(1)
-
-    hook.unmount()
-    hook1.unmount()
-
-    expect(injectorAny.appContainer.size).toBe(1)
-  })
-
   test(`component using hooks 'useInjection' should render accurately`, async () => {
     let count = 0
     const Comp: React.FC = () => {
-      const a = useInjection(A)
+      const a = useInjection(A, '')
 
       const changeName = () => {
         a.setProps(({ name }) => ({ name: name + '-' }))

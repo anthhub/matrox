@@ -17,7 +17,7 @@ describe('StoreBase', () => {
     money = 0
   }
 
-  const storeA = getInjection(A) as Readonly<A>
+  const storeA = getInjection(A, '') as Readonly<A>
 
   const mockForceUpdate1 = jest.fn(() => undefined)
   const mockForceUpdate2 = jest.fn(() => undefined)
