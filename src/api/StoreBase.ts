@@ -143,8 +143,7 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
    */
   resetStore = () => {
     const initialValues: any = this[_meta].initialValues
-    this[_updatePropsWithoutRender](initialValues)
-    return directUpdate(this[_meta].liseners)
+    return this.setProps(() => initialValues)
   }
   /**
    * merge action and batching update store or component using this store
