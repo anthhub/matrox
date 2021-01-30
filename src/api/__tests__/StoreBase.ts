@@ -59,7 +59,7 @@ describe('StoreBase', () => {
       },
       liseners: liseners,
       options: options1,
-      key: genClassKey(A).key,
+      key: genClassKey(A, '').key,
       storeName: 'A',
       ignoredProps: []
     })

@@ -27,9 +27,10 @@ class Injector {
     InjectedStoreClass: Constructor<T>,
     arg: Payload<T> | undefined,
     liseners: Lisener[],
-    compType: CompType
+    compType: CompType,
+    identification: string | number = ''
   ) {
-    const instance = this.get(InjectedStoreClass, arg, liseners)
+    const instance = this.get(InjectedStoreClass, arg, liseners, identification)
 
     const instanceLiseners: Lisener[] = instance[_meta].liseners || []
 
@@ -53,7 +54,8 @@ class Injector {
   get<T extends StoreBase<T>>(
     InjectedStoreClass: Constructor<T>,
     args: Payload<T> = {},
-    liseners: Lisener[]
+    liseners: Lisener[],
+    identification: string | number = ''
   ): T {
     const { options: options1, ignoredProps = [] } = (InjectedStoreClass as any)[_meta] as Meta
 
@@ -63,7 +65,7 @@ class Injector {
 
     let container = this.appContainer
 
-    const { key, className } = genClassKey(InjectedStoreClass)
+    const { key, className } = genClassKey(InjectedStoreClass, identification)
 
     instance = container.get(key)
 

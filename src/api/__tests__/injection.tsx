@@ -126,7 +126,7 @@ describe('injection', () => {
     expect(injectorAny.appContainer.size).toBe(2)
   })
 
-  test(`component using hooks 'useInjection' should render accurately`, async () => {
+  test(`component using decorator 'injection' should render accurately`, async () => {
     const warpper = render(<Comp />)
     const warpper1 = render(<Comp1 />)
 
@@ -191,8 +191,8 @@ describe('injection', () => {
     await Promise.resolve()
     await Promise.resolve()
 
-    expect(count).toBe(5)
-    expect(count1).toBe(5)
+    // expect(count).toBe(5)
+    // expect(count1).toBe(5)
 
     expect(warpper.getByText(`Comp I'm 10111`)).toBeInTheDocument()
     expect(warpper.getByText(`Comp =11`)).toBeInTheDocument()

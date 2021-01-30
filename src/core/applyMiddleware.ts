@@ -1,12 +1,13 @@
 import compose from './compose'
 import StoreBase, { _meta, _updatePropsWithoutRender } from '../api/StoreBase'
 import { MiddleWare, StoreAPI } from '../types/middleware'
+import { logError } from './utils'
 
 const applyMiddleware = (...middlewares: MiddleWare[]) => {
   return <T extends StoreBase<any>>(store: T) => {
     let dispatch: any = () => {
-      throw new Error(
-        `Matrox: dispatching while constructing your middleware is not allowed. Other middleware would not be applied to this dispatch.`
+      logError(
+        `dispatching while constructing your middleware is not allowed. Other middleware would not be applied to this dispatch.`
       )
     }
 

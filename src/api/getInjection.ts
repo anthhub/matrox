@@ -9,9 +9,10 @@ const cache = new Map()
 
 const getInjection = <T extends StoreBase<T>>(
   InjectedStoreClass: Constructor<T>,
-  args?: Payload<T>
+  args?: Payload<T>,
+  identification: number | string = ''
 ): Readonly<T> | undefined => {
-  return injector.get(InjectedStoreClass, args, [])
+  return injector.get(InjectedStoreClass, args, [], identification)
 }
 
 export default getInjection

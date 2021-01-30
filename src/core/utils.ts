@@ -20,14 +20,17 @@ export const getClassName = (clazz: Constructor<any>) => {
   return name1 || name2 || ''
 }
 
-export const genClassKey = <T extends StoreBase<T>>(InjectedStoreClass: Constructor<T>) => {
+export const genClassKey = <T extends StoreBase<T>>(
+  InjectedStoreClass: Constructor<T>,
+  identification: string | number = ''
+) => {
   const keyPrefix = hashCode('MATROX')
 
   const className = getClassName(InjectedStoreClass)
 
-  const classHaseCode = hashCode(InjectedStoreClass.toString().slice(0, 100))
+  const classHaseCode = hashCode(InjectedStoreClass.toString())
 
-  const key = `${keyPrefix}@${className}@${classHaseCode}`
+  const key = `${keyPrefix}@${className}@${classHaseCode}@${identification}`
 
   return { key, className, classHaseCode, keyPrefix }
 }
@@ -72,7 +75,7 @@ export const collectDependences = <T extends StoreBase<T>>(
       if (typeof key === 'symbol') {
         return Reflect.set(target, key, value)
       }
-      logError('Matrox: store property is readonly.')
+      logError('store property is readonly.')
       return false
     }
   })
@@ -83,7 +86,7 @@ export const getProperties = <T extends PlainObject>(target: T): T => {
     const result = target[key]
 
     if (result === undefined) {
-      logError(`Matrox: please define "${key}" before using.`)
+      logError(`please define "${key}" before using.`)
       return
     }
     // tslint:disable-next-line: strict-type-predicates
@@ -95,9 +98,10 @@ export const getProperties = <T extends PlainObject>(target: T): T => {
 }
 
 export const logError = (msg: string) => {
+  const message = 'Matrox: ' + msg
   if (process.env.NODE_ENV === 'production') {
-    console.error(msg)
+    console.error(message)
   } else {
-    throw Error(msg)
+    throw Error(message)
   }
 }
