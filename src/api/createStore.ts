@@ -1,10 +1,10 @@
 import getInjection from './getInjection'
-import StoreBase from './StoreBase'
+import StoreBase, { _meta } from './StoreBase'
 import useInjection from './useInjection'
 import injection from './injection'
-import { Payload } from '../types/StoreBase'
 import { Constructor, StoreOptions } from '../types/store'
 import store from './store'
+import { getWatchedProps } from '../core/utils'
 
 /**
  * create a store and return `useStore, injectStore, getStore, preloadStore, getState`
@@ -20,7 +20,7 @@ import store from './store'
  *
  * @see https://github.com/anthhub/matrox#createStore
  */
-const createStore = <T extends StoreBase<T>, U extends Payload<T>>(
+const createStore = <T extends StoreBase<T>>(
   InjectedStoreClass: Constructor<T>,
   options: StoreOptions = {}
 ) => {
@@ -99,7 +99,11 @@ const createStore = <T extends StoreBase<T>, U extends Payload<T>>(
    * @see https://github.com/anthhub/matrox#getState
    */
   const getState = (identification: number | string = '') => {
-    return JSON.parse(JSON.stringify(getStore(identification) || {}))
+    const store: T | undefined = getStore(identification)
+    if (!store) {
+      return {}
+    }
+    return store.getState()
   }
 
   return { useStore, injectStore, getStore, preloadStore, getState }

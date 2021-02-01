@@ -7,6 +7,8 @@ import {
   directUpdate
 } from './StoreBaseUtils'
 import { Action, Meta, ActionFn, Payload, KVProps } from '../types/StoreBase'
+import { PlainObject } from '../types/store'
+import { getWatchedProps } from '../core/utils'
 
 const _isBatchingUpdate = Symbol(`_isBatchingUpdate`)
 const _actionsMergedQueue = Symbol(`_actionsMergedQueue`)
@@ -176,5 +178,10 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
     this[_isBatchingUpdate] = false
 
     await this[_mergeAction]()
+  }
+  getState = (): PlainObject => {
+    const ignoredProps = this[_meta].ignoredProps || []
+    const state = getWatchedProps(this, ignoredProps)
+    return JSON.parse(JSON.stringify(state))
   }
 }

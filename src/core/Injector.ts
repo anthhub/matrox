@@ -1,8 +1,8 @@
-import { mergeOptions, collectDependences, genClassKey, getProperties } from './utils'
+import { mergeOptions, collectDependences, genClassKey, getWatchedProps } from './utils'
 import StoreBase, { _meta, _updatePropsWithoutRender } from '../api/StoreBase'
 
 import { Constructor } from '../types/store'
-import { Payload, Lisener, KVProps, Meta, CompType } from '../types/StoreBase'
+import { Lisener, Meta, CompType } from '../types/StoreBase'
 import { globalOptions } from '../api/globalConfig'
 import applyMiddleware from './applyMiddleware'
 
@@ -69,11 +69,12 @@ class Injector {
 
     if (!instance) {
       instance = new InjectedStoreClass()
-      const initialValues = getProperties(instance)
+      const initialValues = getWatchedProps(instance, ignoredProps)
 
       instance[_meta] = {
         ...instance[_meta],
         options,
+        ignoredProps,
         key,
         storeName: className,
         initialValues

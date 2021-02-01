@@ -4,7 +4,7 @@ import {
   genClassKey,
   mergeOptions,
   collectDependences,
-  getProperties,
+  getWatchedProps,
   logError
 } from '../utils'
 
@@ -124,7 +124,7 @@ describe('Injector utils', () => {
   })
 
   test('function getProperties should get properties of an object', () => {
-    const rs = getProperties({ a: () => undefined, b: '1', [Symbol('c')]: 'c' })
+    const rs = getWatchedProps({ a: () => undefined, b: '1', [Symbol('c')]: 'c' }, [])
     expect(rs).toEqual({ b: '1' })
   })
 

@@ -16,7 +16,7 @@ const applyMiddleware = (...middlewares: MiddleWare[]) => {
     const storeAPI: StoreAPI = {
       meta: rest,
       updatePropsWithoutRender: store[_updatePropsWithoutRender],
-      getState: () => JSON.parse(JSON.stringify(store)),
+      getState: store.getState,
       dispatch: store.setProps
     }
 

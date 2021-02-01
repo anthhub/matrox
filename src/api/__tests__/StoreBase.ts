@@ -156,7 +156,8 @@ describe('StoreBase', () => {
     expect(storeA.money).toBe(99)
     expect(storeA.name).toBe('99')
 
-    storeA.resetStore()
+    await storeA.resetStore()
+
     expect(storeA.age).toBe(0)
     expect(storeA.money).toBe(0)
     expect(storeA.name).toBe('1')
