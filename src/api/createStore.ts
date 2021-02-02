@@ -4,7 +4,7 @@ import useInjection from './useInjection'
 import injection from './injection'
 import { Constructor, StoreOptions } from '../types/store'
 import store from './store'
-import { getWatchedProps } from '../core/utils'
+import { getProperties } from '../core/utils'
 
 /**
  * create a store and return `useStore, injectStore, getStore, preloadStore, getState`

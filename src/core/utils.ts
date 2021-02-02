@@ -24,7 +24,7 @@ export const genClassKey = <T extends StoreBase<T>>(
   InjectedStoreClass: Constructor<T>,
   identification: string | number = ''
 ) => {
-  const keyPrefix = hashCode('MATROX')
+  const keyPrefix = 'MATROX'
 
   const className = getClassName(InjectedStoreClass)
 
@@ -81,7 +81,7 @@ export const collectDependences = <T extends StoreBase<T>>(
   })
 }
 
-export const getWatchedProps = <T extends PlainObject>(target: T, ignoredProps: string[]): T => {
+export const getProperties = <T extends PlainObject>(target: T, ignoredProps: string[]): T => {
   return Object.keys(target).reduce((res: any, key) => {
     const result = target[key]
 
@@ -90,7 +90,7 @@ export const getWatchedProps = <T extends PlainObject>(target: T, ignoredProps: 
       return
     }
     // tslint:disable-next-line: strict-type-predicates
-    if (typeof key !== 'symbol' && !ignoredProps.includes(key) && typeof result !== 'function') {
+    if (!ignoredProps.includes(key) && typeof key !== 'symbol' && typeof result !== 'function') {
       res[key] = result
     }
     return res
