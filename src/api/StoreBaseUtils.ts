@@ -64,14 +64,12 @@ export const reduceUpdateObject = <T extends PlainObject, U extends PlainObject>
 ): U => {
   return Object.keys(updateObject).reduce((res: any, key) => {
     if (target[key] === undefined) {
-      logError(`Matrox: Target don't exist the '${key}', please define it before using.`)
+      logError(`target don't exist the '${key}', please define it before using.`)
       return
     }
 
     if (typeof updateObject[key] !== typeof target[key]) {
-      logError(
-        `Matrox: expected ${typeof target[key]} but ${typeof updateObject[key]} in field ${key}.`
-      )
+      logError(`expected ${typeof target[key]} but ${typeof updateObject[key]} in field ${key}.`)
       return
     }
 
@@ -90,7 +88,7 @@ export const updateTarget = <T extends PlainObject>(target: T, updateObject: KVP
     const value = (updateObject as any)[key]
 
     if (typeof value === 'function') {
-      logError(`Matrox: Forbid reset method of class.`)
+      logError(`forbid reset method of class.`)
       return
     }
 

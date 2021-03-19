@@ -124,7 +124,7 @@ describe('Injector utils', () => {
   })
 
   test('function getProperties should get properties of an object', () => {
-    const rs = getProperties({ a: () => undefined, b: '1', [Symbol('c')]: 'c' })
+    const rs = getProperties({ a: () => undefined, b: '1', [Symbol('c')]: 'c' }, [])
     expect(rs).toEqual({ b: '1' })
   })
 

@@ -7,6 +7,8 @@ import {
   directUpdate
 } from './StoreBaseUtils'
 import { Action, Meta, ActionFn, Payload, KVProps } from '../types/StoreBase'
+import { PlainObject } from '../types/store'
+import { getProperties } from '../core/utils'
 
 const _isBatchingUpdate = Symbol(`_isBatchingUpdate`)
 const _actionsMergedQueue = Symbol(`_actionsMergedQueue`)
@@ -143,8 +145,7 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
    */
   resetStore = () => {
     const initialValues: any = this[_meta].initialValues
-    this[_updatePropsWithoutRender](initialValues)
-    return directUpdate(this[_meta].liseners)
+    return this.setProps(() => initialValues)
   }
   /**
    * merge action and batching update store or component using this store
@@ -177,5 +178,21 @@ export default abstract class StoreBase<T = {}, U extends string = string> {
     this[_isBatchingUpdate] = false
 
     await this[_mergeAction]()
+  }
+  /**
+   * get store static state (watched props)
+   *
+   *
+   * @example
+   * ```ts
+   * store.getState()
+   * ```
+   *
+   * @see https://github.com/anthhub/matrox#getState
+   */
+  getState = (): PlainObject => {
+    const ignoredProps = this[_meta].ignoredProps || []
+    const state = getProperties(this, ignoredProps)
+    return JSON.parse(JSON.stringify(state))
   }
 }

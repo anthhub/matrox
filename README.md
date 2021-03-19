@@ -93,13 +93,11 @@ export default class App extends React.Component {
 
 ## 进阶用法
 
-### store 的初始化参数
+### store 的多例模式
 
-store 可以传入初始化参数可以是 `palin object`,或者是返回 `palin object`的`callback`
+有的时候我们需要同时创建多个 store 的示例, 这个时候我们可以传入 `identification` 来索引其中之一.
 
 如下方的例子一样, 我们可以在 `useStore` 或者 `injectStore` 传入参数, 例如在 function 组件中:
-
-> `注意:` `useStore`,`useStore`等初始化参数只会使用实例化时的第一个的参数
 
 ```tsx
 import { StoreBase, createStore } from 'matrox'
@@ -112,10 +110,8 @@ class CounterStore extends StoreBase<CounterStore> {
 
 const { useStore, injectStore } = createStore(CounterStore)
 
-export default function App() {
-  const { count, increment, decrement } = useStore(() => {
-    count: 1
-  })
+export default function App(props) {
+  const { count, increment, decrement } = useStore(props.id)
   return (
     <div className="App">
       <h1>Hello Matrox</h1>

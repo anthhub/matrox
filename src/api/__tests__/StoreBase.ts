@@ -17,7 +17,7 @@ describe('StoreBase', () => {
     money = 0
   }
 
-  const storeA = getInjection(A) as Readonly<A>
+  const storeA = getInjection(A, '') as Readonly<A>
 
   const mockForceUpdate1 = jest.fn(() => undefined)
   const mockForceUpdate2 = jest.fn(() => undefined)
@@ -59,7 +59,7 @@ describe('StoreBase', () => {
       },
       liseners: liseners,
       options: options1,
-      key: genClassKey(A).key,
+      key: genClassKey(A, '').key,
       storeName: 'A',
       ignoredProps: []
     })
@@ -156,7 +156,8 @@ describe('StoreBase', () => {
     expect(storeA.money).toBe(99)
     expect(storeA.name).toBe('99')
 
-    storeA.resetStore()
+    await storeA.resetStore()
+
     expect(storeA.age).toBe(0)
     expect(storeA.money).toBe(0)
     expect(storeA.name).toBe('1')

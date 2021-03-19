@@ -1,6 +1,6 @@
 {
   "name": "matrox",
-  "version": "1.0.1",
+  "version": "1.0.8",
   "description": "",
   "keywords": [],
   "main": "dist/matrox.umd.js",

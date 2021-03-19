@@ -16,6 +16,11 @@ describe('Injector', () => {
     name = '1'
   }
 
+  @store()
+  class B extends StoreBase<B> {
+    age = 0
+  }
+
   beforeEach(() => {
     injectorAny.clear()
   })
@@ -26,18 +31,17 @@ describe('Injector', () => {
   })
 
   test('the get method of Injector class should get a same instance for a same class', () => {
-    const a = injector.get(A, {}, [])
-    const a1 = injector.get(A, {}, [])
+    const a = injector.get(A, [], '')
+    const a1 = injector.get(A, [])
     expect(a).toStrictEqual(a1)
     expect(injectorAny.appContainer.size).toBe(1)
   })
 
-  test(`the args parameter of get method of Injector class should effect the instance at it's initiation firstly`, () => {
-    const a = injector.get(A, { name: '2' }, [])
-    expect(a.name).toBe('2')
+  test(`the identification parameter of get method of Injector class should control the initiation of instance for session store`, () => {
+    const b = injector.get(B, [], 1)
 
-    const a1 = injector.get(A, { name: '3' }, [])
-    expect(a1.name).toBe('2')
+    const b1 = injector.get(B, [], 2)
+    expect(b1).not.toBe(b)
   })
 
   test(`the subscribe method of Injector class should subscribe the store instance for comp and return a unsubscribe function`, () => {
@@ -56,15 +60,15 @@ describe('Injector', () => {
         { forceUpdate: forceUpdate1, self, watchedProps: new Set<string>(), compType, role }
       ]
 
-      const unsubscribe = injector.subscribe(Clazz, {}, liseners, compType)
+      const unsubscribe = injector.subscribe(Clazz, liseners, compType)
       // 未实例化则实例化
       expect(injectorAny.appContainer.size).toBe(1)
 
-      const a = injector.get(Clazz, {}, liseners)
+      const a = injector.get(Clazz, liseners)
 
       expect(a[_meta].liseners.length).toBe(1)
       // 重复注册
-      const unsubscribe1 = injector.subscribe(Clazz, {}, liseners1, compType)
+      const unsubscribe1 = injector.subscribe(Clazz, liseners1, compType)
       expect(a[_meta].liseners.length).toBe(1)
 
       unsubscribe1()
